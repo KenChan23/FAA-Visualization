@@ -1,0 +1,3 @@
+columnname,columntype,length,description
+c5,Char,15,Unique control number used to relate to AID_MAIN table.
+Remark,Text,16,NULL
