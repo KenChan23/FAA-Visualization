@@ -1,18 +1,6 @@
 module.exports = function(grunt){
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    jade: {
-      compile: {
-        options: {
-          data: {
-            debug: false
-          }
-        },
-        files: {
-          "views/html/index.html" : ["views/jade/index.jade"]
-        }
-      }
-    },
     jsbeautifier: {
       files: ["views/html/*.html", "public/javascripts/visualization.js", "public/stylesheets/*.css"],
       options: {
@@ -60,9 +48,8 @@ module.exports = function(grunt){
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['jade', 'jsbeautifier', 'uglify']);
+  grunt.registerTask('default', ['jsbeautifier', 'uglify']);
 }

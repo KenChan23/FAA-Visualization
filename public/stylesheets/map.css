@@ -1,5 +1,5 @@
 .land {
-  fill: #ddd;
+  fill: #333;
 }
 
 .border {
@@ -10,7 +10,7 @@
 }
 
 .bubble {
-  fill: brown;
+  fill: #26a69a;
   fill-opacity: .5;
   stroke: #fff;
   stroke-width: .5px;
