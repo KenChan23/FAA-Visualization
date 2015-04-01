@@ -25,28 +25,18 @@ var process_data = function(accidents_csv_path, remarks_csv_path, file_path){
           case 'c9': 
             accidents_categories[i] = 'date';
             break;
-          // case 'c96': 
-          //   accidents_categories[i] = 'flight_phase';
-          //   break;
           case 'c78': 
             accidents_categories[i] = 'primary_cause';
             break;
           case 'c76': 
             accidents_categories[i] = 'fatalities';
             break;
-          // case 'c11' : 
-          //   accidents_categories[i] = 'location';
-          //   break;
-          // case 'c20': 
-          //   accidents_categories[i] = 'latitude';
-          //   break;
-          // case 'c21':
-          //   accidents_categories[i] = 'longitude';
-          //   break;
           case 'c14':
             accidents_categories[i] = 'city';
+            break;
           case 'c13':
             accidents_categories[i] = 'state';
+            break;
           case 'c104':
             accidents_categories[i] = 'weather';
             break;
@@ -58,10 +48,7 @@ var process_data = function(accidents_csv_path, remarks_csv_path, file_path){
             break;
           case 'c94': 
             accidents_categories[i] = 'type';
-            break;
-          // case 'c98':
-          //   accidents_categories[i] = 'damage';
-          //   break;    
+            break;  
           default:
             break;
         }
@@ -74,12 +61,6 @@ var process_data = function(accidents_csv_path, remarks_csv_path, file_path){
           case 'c40': 
             pilots_categories[i] = 'pilot_certification';
             break;
-          // case 'c45': 
-          //   pilots_categories[i] = 'pilot_rating';
-          //   break;
-          // case 'c49': 
-          //   pilots_categories[i] = 'pilot_qualification';
-          //   break;
           case 'c53': 
             pilots_categories[i] = 'total_hours_model_flown';
             break;
@@ -98,30 +79,18 @@ var process_data = function(accidents_csv_path, remarks_csv_path, file_path){
         //  Aircraft Categories
         switch(d)
         {
-          // case 'c144': 
-          //   aircrafts_categories[i] = 'aircraft_design';
-          //   break;
-          // case 'c145': 
-          //   aircrafts_categories[i] = 'weight_class';
-          //   break;
           case 'c23': 
             aircrafts_categories[i] = 'aircraft_make';
             break;
           case 'c24': 
             aircrafts_categories[i] = 'aircraft_model';
             break;
-          // case 'c25': 
-          //   aircrafts_categories[i] = 'aircraft_group';
-          //   break;
           case 'c151': 
             aircrafts_categories[i] = 'engines';
             break;
           case 'c31': 
             aircrafts_categories[i] = 'hours_airframe';
             break;
-          // case 'c147':
-          //   aircrafts_categories[i] = 'wing_information';
-          //   break;
           default:
             break;
         }
@@ -132,58 +101,64 @@ var process_data = function(accidents_csv_path, remarks_csv_path, file_path){
             var data_object = {};
             
             for(var key in accidents_categories){
+              row[key] = row[key].replace(/[ \t]+$/, '');
               switch(accidents_categories[key]){
                 case 'type':
+                  row[key] = accident_codes.type[row[key]];
+                  break;
                 case 'primary_cause':
-                case 'flight_phase':
+                  row[key] = accident_codes.primary_cause[row[key]];
+                  break;
                 case 'light':
+                  row[key] = accident_codes.light[row[key]];
+                  break;
                 case 'visibility':
+                  row[key] = accident_codes.visibility[row[key]];
+                  break;
                 case 'damage':
+                  row[key] = accident_codes.damage[row[key]];
+                  break;
                 case 'weather':
-                case 'city':
-                case 'state':
-                  row[key] = row[key];
+                  row[key] = accident_codes.weather[row[key]];
                   break;
                 default:
                   break;
               }
               if(accidents_categories[key] == 'date'){row[key] = formatDate(row[key]);}
-              // else{if(!isNaN(parseInt(row[key]))){row[key] = parseInt(row[key])};}
-              // if(typeof(row[key]) == 'undefined' || row[key] == ''){row[key] = null;}
+              else{if(!isNaN(parseInt(row[key]))){row[key] = parseInt(row[key])};}
+              if(typeof(row[key]) == 'undefined' || row[key] == ''){row[key] = null;}
               data_object[accidents_categories[key]] = row[key];
             }
             for(var key in pilots_categories){
+              row[key] = row[key].replace(/[ \t]+$/, '');
               switch(pilots_categories[key]){
                 case 'pilot_certification':
+                  row[key] = pilot_codes.pilot_certification[row[key]];
+                  break;
                 case 'pilot_rating':
+                  row[key] = pilot_codes.pilot_rating[row[key]]; 
+                  break;
                 case 'pilot_qualification': 
-                  row[key] = row[key].replace(/\s{2,}/, '');
-                  row[key] = row[key];
+                  row[key] = pilot_codes.pilot_qualification[row[key]];
                   break;
                 default: 
                   break;
               }
-              // if(!isNaN(parseInt(row[key]))){row[key] = parseInt(row[key])};
-              // if(typeof(row[key]) == 'undefined' || row[key] == ''){row[key] = null;}
+              if(!isNaN(parseInt(row[key]))){row[key] = parseInt(row[key])};
+              if(typeof(row[key]) == 'undefined' || row[key] == ''){row[key] = null;}
               data_object[pilots_categories[key]] = row[key];
             }
             for(var key in aircrafts_categories){
               switch(aircrafts_categories[key]){
-                // case 'weight_class':
-                // case 'wing_information':
-                //   row[key] = row[key];
-                //   break;
-                // case 'aircraft_design':
                 case 'aircraft_make':
                 case 'aircraft_model':
-                case 'aircraft_group':
-                  row[key] = row[key].replace(/\s{2,}/, '');
+                  row[key] = row[key].replace(/[ \t]+$/, '');
                   break;
                 default:
                   break;
               }
-              // if(!isNaN(parseInt(row[key]))){row[key] = parseInt(row[key])};
-              // if(typeof(row[key]) == 'undefined' || row[key] == ''){row[key] = null;}
+              if(!isNaN(parseInt(row[key]))){row[key] = parseInt(row[key])};
+              if(typeof(row[key]) == 'undefined' || row[key] == ''){row[key] = null;}
               data_object[aircrafts_categories[key]] = row[key];
             }
             data_object.remarks = remarks_dict[row[0]];
@@ -242,7 +217,7 @@ function CSVToArray( strData, strDelimiter ){
 
 function ConvertToCSV(objArray) {
   var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-  var str = 'date,,longitude,weather,light,visibility,fatalities,primary_cause,type,pilot_age,total_hours_model_flown,hours_model_flown_90_days,hours_flown_90_days,total_hours_flown,pilot_certification,engines,aircraft_make,aircraft_model,hours_airframe,remarks' + '\r\n';
+  var str = 'date,state,city,weather,light,visibility,fatalities,primary_cause,type,pilot_age,total_hours_model_flown,hours_model_flown_90_days,hours_flown_90_days,total_hours_flown,pilot_certification,engines,aircraft_make,aircraft_model,hours_airframe,remarks' + '\r\n';
 
   //  For each object.
   for (var i = 0; i < array.length; i++) {
@@ -261,7 +236,7 @@ function ConvertToCSV(objArray) {
 }
 
 function formatDate(date){
-  return date.substring(4, 6) + '/' + date.substring(6, 8) + '/' + date.substring(0, 4);
+  return date.substring(0, 4) + '-' + date.substring(4, 6) + '-' + date.substring(6, 8);
 }
 
 var accident_remarks_dict = {
