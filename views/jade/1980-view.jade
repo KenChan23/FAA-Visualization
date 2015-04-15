@@ -12,4 +12,13 @@ html(lang='en')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
   body
     div#side-button    
+    form(action="#").heatmap-filters
+      p.accidents-input
+        input(name='heatmap', type='radio', id='accidents')
+        label(for="accidents")
+          | Accidents
+      p.fatalities-input
+        input(name='heatmap', type='radio', id='fatalities', checked)
+        label(for="fatalities")
+          | Fatalities
     script(type='text/javascript', src='/javascripts/dashboard.min.js')

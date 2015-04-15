@@ -262,14 +262,14 @@ function formatDate(date){
 }
 
 var accident_remarks_dict = {
-  1975 : { accidents_csv_path : '../../data/accidents/a1975_79.csv', remarks_csv_path : '../../data/remarks/e1975_79.csv', file_path : '../../data/part_91_csv/data_1975_79.csv'},
-  1980 : { accidents_csv_path : '../../data/accidents/a1980_84.csv', remarks_csv_path : '../../data/remarks/e1980_84.csv', file_path : '../../data/part_91_csv/data_1980_84.csv'},
-  1985 : { accidents_csv_path : '../../data/accidents/a1985_89.csv', remarks_csv_path : '../../data/remarks/e1985_89.csv', file_path : '../../data/part_91_csv/data_1985_89.csv'},
-  1990 : { accidents_csv_path : '../../data/accidents/a1990_94.csv', remarks_csv_path : '../../data/remarks/e1990_94.csv', file_path : '../../data/part_91_csv/data_1990_94.csv'},
-  1995 : { accidents_csv_path : '../../data/accidents/a1995_99.csv', remarks_csv_path : '../../data/remarks/e1995_99.csv', file_path : '../../data/part_91_csv/data_1995_99.csv'},
-  2000 : { accidents_csv_path : '../../data/accidents/a2000_04.csv', remarks_csv_path : '../../data/remarks/e2000_04.csv', file_path : '../../data/part_91_csv/data_2000_04.csv'},
-  2005 : { accidents_csv_path : '../../data/accidents/a2005_09.csv', remarks_csv_path : '../../data/remarks/e2005_09.csv', file_path : '../../data/part_91_csv/data_2005_09.csv'},
-  2010 : { accidents_csv_path : '../../data/accidents/a2010_14.csv', remarks_csv_path : '../../data/remarks/e2010_14.csv', file_path : '../../data/part_91_csv/data_2010_14.csv'}
+  1975 : { accidents_csv_path : '../data/accidents/a1975_79.csv', remarks_csv_path : '../data/remarks/e1975_79.csv', file_path : '../data/part_91_csv/data_1975_79.csv'},
+  1980 : { accidents_csv_path : '../data/accidents/a1980_84.csv', remarks_csv_path : '../data/remarks/e1980_84.csv', file_path : '../data/part_91_csv/data_1980_84.csv'},
+  1985 : { accidents_csv_path : '../data/accidents/a1985_89.csv', remarks_csv_path : '../data/remarks/e1985_89.csv', file_path : '../data/part_91_csv/data_1985_89.csv'},
+  1990 : { accidents_csv_path : '../data/accidents/a1990_94.csv', remarks_csv_path : '../data/remarks/e1990_94.csv', file_path : '../data/part_91_csv/data_1990_94.csv'},
+  1995 : { accidents_csv_path : '../data/accidents/a1995_99.csv', remarks_csv_path : '../data/remarks/e1995_99.csv', file_path : '../data/part_91_csv/data_1995_99.csv'},
+  2000 : { accidents_csv_path : '../data/accidents/a2000_04.csv', remarks_csv_path : '../data/remarks/e2000_04.csv', file_path : '../data/part_91_csv/data_2000_04.csv'},
+  2005 : { accidents_csv_path : '../data/accidents/a2005_09.csv', remarks_csv_path : '../data/remarks/e2005_09.csv', file_path : '../data/part_91_csv/data_2005_09.csv'},
+  2010 : { accidents_csv_path : '../data/accidents/a2010_14.csv', remarks_csv_path : '../data/remarks/e2010_14.csv', file_path : '../data/part_91_csv/data_2010_14.csv'}
 };
 
 //  Accident Codes

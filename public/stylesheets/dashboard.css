@@ -2,6 +2,12 @@ body {
   font: 10px sans-serif;
   shape-rendering: crispEdges;
 }
+/**
+
+
+
+
+**/
 
 .day {
   fill: #fff;
@@ -14,66 +20,66 @@ body {
   stroke-width: 2px;
 }
 
-.RdYlGn .q0-13 {
+.RdYlGn .q-fatality0-13 {
   fill: rgb(255, 255, 255)
 }
 
-.RdYlGn .q1-13 {
+.RdYlGn .q-fatality1-13 {
   fill: rgb(255, 205, 46)
 }
 
-.RdYlGn .q2-13 {
+.RdYlGn .q-fatality2-13 {
   fill: rgb(255, 180, 23)
 }
 /**/
 
-.RdYlGn .q3-13 {
+.RdYlGn .q-fatality3-13 {
   fill: rgb(255, 156, 0)
 }
 
-.RdYlGn .q4-13 {
+.RdYlGn .q-fatality4-13 {
   fill: rgb(255, 142, 0)
 }
 /**/
 
-.RdYlGn .q5-13 {
+.RdYlGn .q-fatality5-13 {
   fill: rgb(255, 133, 0)
 }
 /**/
 
-.RdYlGn .q6-13 {
+.RdYlGn .q-fatality6-13 {
   fill: rgb(255, 119, 1)
 }
 
-.RdYlGn .q7-13 {
+.RdYlGn .q-fatality7-13 {
   fill: rgb(247, 101, 1)
 }
 /**/
 
-.RdYlGn .q8-13 {
+.RdYlGn .q-fatality8-13 {
   fill: rgb(234, 88, 1)
 }
 /**/
 
-.RdYlGn .q9-13 {
+.RdYlGn .q-fatality9-13 {
   fill: rgb(226, 72, 0)
 }
 
-.RdYlGn .q10-13 {
+.RdYlGn .q-fatality10-13 {
   fill: rgb(213, 50, 0)
 }
 /**/
 
-.RdYlGn .q11-13 {
+.RdYlGn .q-fatality11-13 {
   fill: rgb(204, 34, 0)
 }
 
-.RdYlGn .q12-13 {
+.RdYlGn .q-fatality12-13 {
   fill: rgb(160, 15, 0)
 }
 /**/
 
-.RdYlGn .q13-13 {
+.RdYlGn .q-fatality13-13 {
   fill: rgb(134, 2, 0)
 }
 
@@ -81,7 +87,43 @@ body {
   position: fixed;
   right: 0;
   top: 50%;
-  background-color: blue;
+  background-color: #A00F00;
   height: 50px;
   width: 50px;
+}
+
+input[type="radio"]:checked+label:after {
+  border: 2px solid #A00F00;
+  background-color: #A00F00;
+}
+
+.heatmap-filters {
+  position: relative;
+}
+/**
+
+
+
+**/
+
+.axis,
+.frame {
+  shape-rendering: crispEdges;
+}
+
+.axis line {
+  stroke: #ddd;
+}
+
+.axis path {
+  display: none;
+}
+
+.frame {
+  fill: none;
+  stroke: #aaa;
+}
+
+circle {
+  fill-opacity: .7;
 }
