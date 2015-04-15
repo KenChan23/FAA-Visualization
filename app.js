@@ -5,8 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
+var map = require('./routes/map');
+// var route_1975 = require('./routes/1975')
+var route_1980 = require('./routes/1980')
+// var route_1985 = require('./routes/1985')
+// var route_1990 = require('./routes/1990')
+// var route_1995 = require('./routes/1995')
+// var route_2000 = require('./routes/2000')
+// var route_2005 = require('./routes/2005')
+// var route_2010 = require('./routes/2010')
 
 var app = express();
 
@@ -22,8 +31,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use('/', index);
+app.use('/map', map);
 app.use('/users', users);
+app.use('/1980-visualization', route_1980)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

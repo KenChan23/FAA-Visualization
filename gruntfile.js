@@ -42,7 +42,8 @@ module.exports = function(grunt){
     uglify: {
       my_target: {
         files: {
-          'public/javascripts/visualization.min.js' : ['public/javascripts/visualization.js']
+          'public/javascripts/dashboard.min.js' : ['public/javascripts/dashboard.js'],
+          'public/javascripts/map.min.js' : ['public/javascripts/map.js']
         }
       }
     }

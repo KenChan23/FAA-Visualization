@@ -1,6 +1,7 @@
 body {
   padding: 10px 50px 10px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  shape-rendering: crispEdges;
 }
 
 a {
