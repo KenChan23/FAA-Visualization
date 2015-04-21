@@ -2,6 +2,97 @@ body {
   font: 10px sans-serif;
   shape-rendering: crispEdges;
 }
+
+.mayday-title {
+  margin: 0px;
+  padding-top: 10px;
+  padding-left: 50px !important;
+}
+
+.mayday-subtitle {
+  margin: 0px;
+  padding-top: 10px;
+  padding-left: 50px !important;
+}
+/** Side panel! **/
+
+#side-button {
+  position: fixed;
+  right: 0;
+  top: 47%;
+  background-color: #A00F00;
+  height: 50px;
+  width: 50px;
+}
+
+.mdi-navigation-arrow-back {
+  font-size: 48px;
+  color: white;
+}
+
+.cd-panel {
+  /*...*/
+  
+  width: 33%;
+  float: right;
+  visibility: hidden;
+  position: fixed;
+  transition: visibility 0s 0.6s;
+}
+
+.cd-panel.is-visible {
+  visibility: visible;
+  transition: visibility 0s 0s;
+}
+
+.cd-panel-header {
+  /*...*/
+  
+  right: 0px;
+  float: right;
+  position: fixed;
+  top: 0px;
+  width: 33%;
+  height: 25%;
+  transition: top 0.3s 0s;
+}
+
+.is-visible .cd-panel-header {
+  top: 0;
+  transition: top 0.3s 0.3s;
+}
+
+.cd-panel-container {
+  /*...*/
+  
+  height: 75%;
+  position: fixed;
+  width: 33%;
+  height: 100%;
+  top: 25%;
+  right: 0;
+  transition-property: transform;
+  transition-duration: 0.3s;
+  transition-delay: 0.3s;
+  transform: translate3d(100%, 0, 0);
+}
+
+.is-visible .cd-panel-container {
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0s;
+}
+/****/
+
+input[type="radio"]:checked+label:after {
+  border: 2px solid #A00F00;
+  background-color: #A00F00;
+}
+
+.heatmap-filters {
+  position: relative;
+  float: right;
+  right: 50px;
+}
 /**
 
 
@@ -82,24 +173,6 @@ body {
 .RdYlGn .q-fatality13-13 {
   fill: rgb(134, 2, 0)
 }
-
-#side-button {
-  position: fixed;
-  right: 0;
-  top: 50%;
-  background-color: #A00F00;
-  height: 50px;
-  width: 50px;
-}
-
-input[type="radio"]:checked+label:after {
-  border: 2px solid #A00F00;
-  background-color: #A00F00;
-}
-
-.heatmap-filters {
-  position: relative;
-}
 /**
 
 
@@ -126,4 +199,14 @@ input[type="radio"]:checked+label:after {
 
 circle {
   fill-opacity: .7;
+}
+
+circle.hidden {
+  fill: #ccc !important;
+}
+
+.extent {
+  fill: #000;
+  fill-opacity: .125;
+  stroke: #fff;
 }

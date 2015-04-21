@@ -43,7 +43,8 @@ module.exports = function(grunt){
       my_target: {
         files: {
           'public/javascripts/dashboard.min.js' : ['public/javascripts/dashboard.js'],
-          'public/javascripts/map.min.js' : ['public/javascripts/map.js']
+          'public/javascripts/map.min.js' : ['public/javascripts/map.js'],
+          'public/javascripts/sidebutton.min.js' : ['public/javascripts/sidebutton.js']
         }
       }
     }

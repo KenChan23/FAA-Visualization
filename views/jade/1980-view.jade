@@ -11,7 +11,10 @@ html(lang='en')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
   body
-    div#side-button    
+    h4.mayday-title MAYDAY
+    h6.mayday-subtitle FAA Accident Visualization
+    div#side-button
+      i.mdi-navigation-arrow-back  
     form(action="#").heatmap-filters
       p.accidents-input
         input(name='heatmap', type='radio', id='accidents')
@@ -21,4 +24,17 @@ html(lang='en')
         input(name='heatmap', type='radio', id='fatalities', checked)
         label(for="fatalities")
           | Fatalities
+
+    div.cd-panel.from-right
+      header.cd-panel-header
+        h1 
+          | Testing
+        a.cd-panel-close(href="#")
+          | Close
+      div.cd-panel-container
+        div.cd-panel-content
+          p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam magnam accusamus obcaecati nisi eveniet quo veniam quibusdam veritatis autem accusantium doloribus nam mollitia maxime explicabo nemo quae aspernatur impedit cupiditate dicta molestias consectetur, sint reprehenderit maiores. Tempora, exercitationem, voluptate. Sapiente modi officiis nulla sed ullam, amet placeat, illum necessitatibus, eveniet dolorum et maiores earum tempora, quas iste perspiciatis quibusdam vero accusamus veritatis. Recusandae sunt, repellat incidunt impedit tempore iusto, nostrum eaque necessitatibus sint eos omnis! Beatae, itaque, in. Vel reiciendis consequatur saepe soluta itaque aliquam praesentium, neque tempora. Voluptatibus sit, totam rerum quo ex nemo pariatur tempora voluptatem est repudiandae iusto, architecto perferendis sequi, asperiores dolores doloremque odit. Libero, ipsum fuga repellat quae numquam cumque nobis ipsa voluptates pariatur, a rerum aspernatur aliquid maxime magnam vero dolorum omnis neque fugit laboriosam eveniet veniam explicabo, similique reprehenderit at. Iusto totam vitae blanditiis. Culpa, earum modi rerum velit voluptatum voluptatibus debitis, architecto aperiam vero tempora ratione sint ullam voluptas non! Odit sequi ipsa, voluptatem ratione illo ullam quaerat qui, vel dolorum eligendi similique inventore quisquam perferendis reprehenderit quos officia! Maxime aliquam, soluta reiciendis beatae quisquam. Alias porro facilis obcaecati et id, corporis accusamus? Ab porro fuga consequatur quisquam illo quae quas tenetur.
+    div#heatmap-panel
+    div#matrix-scatterplot-panel
+    script(type='text/javascript', src='/javascripts/sidebutton.min.js')
     script(type='text/javascript', src='/javascripts/dashboard.min.js')
