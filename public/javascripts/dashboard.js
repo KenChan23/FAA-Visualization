@@ -181,7 +181,7 @@
 
     var maximumDate = data.values.max;
 
-    d3.selectAll('.day').style('visibility', function(d){
+    d3.selectAll('.day').filter(function(d){
       //  [0] - year
       //  [1] - month
       //  [2] - day
@@ -201,10 +201,10 @@
       var currentDate = Date.parse(d);
 
       if(minimumDate <= currentDate && currentDate <= maximumDate){
-        return 'visible';
+        return d3.select(this).classed('q-invisible', false);
       }
       else
-        return 'hidden'
+        return d3.select(this).classed('q-invisible', true);
     });
 
   });
