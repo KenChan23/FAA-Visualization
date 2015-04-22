@@ -14,19 +14,22 @@ html(lang='en')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js')
     script(type='text/javascript', src='/javascripts/minified/jQAllRangeSliders.min.js')
   body
-    h4.mayday-title MAYDAY
-    h6.mayday-subtitle FAA Accident Visualization
+    div#primary-head
+      div#head-text
+        h4.mayday-title MAYDAY
+        h6.mayday-subtitle FAA Accident Visualization
+      form(action="#").heatmap-filters
+        p.accidents-input
+          input(name='heatmap', type='radio', id='accidents')
+          label(for="accidents")
+            | Accidents
+        p.fatalities-input
+          input(name='heatmap', type='radio', id='fatalities', checked)
+          label(for="fatalities")
+            | Fatalities
     div#side-button
       i.mdi-navigation-arrow-back  
-    form(action="#").heatmap-filters
-      p.accidents-input
-        input(name='heatmap', type='radio', id='accidents')
-        label(for="accidents")
-          | Accidents
-      p.fatalities-input
-        input(name='heatmap', type='radio', id='fatalities', checked)
-        label(for="fatalities")
-          | Fatalities
+    
 
     div.cd-panel.from-right
         div.cd-panel-container

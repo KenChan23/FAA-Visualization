@@ -16,7 +16,7 @@ jQuery(document).ready(function($){
       $(this).children('i').removeClass('mdi-navigation-arrow-back');
       $(this).children('i').addClass('mdi-navigation-arrow-forward')
              .css({'font-size': '48px', 'color': 'white'});
-      $(this).css({ 'right': '33%'});
+      $(this).css({ 'right': '42%'});
     }
     event.preventDefault();
   });

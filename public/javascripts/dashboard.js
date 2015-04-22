@@ -3,6 +3,7 @@
   var MAX_FATALITIES = 13;
   var MAX_ACCIDENTS = 13;
 
+  var data_lookup = {}; 
   var accident_data;
   var fatality_data;
 
@@ -58,6 +59,14 @@
       .attr("d", monthPath);
 
   d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv) {
+
+    csv.forEach(function(d){
+      if(d.date in data_lookup)
+        data_lookup[d.date].push(d);
+      else
+        data_lookup[d.date] = [];
+    });
+
     fatality_data = d3.nest()
       .key(function(d) { return d.date; })
       .rollup(function(d) { 
@@ -84,8 +93,6 @@
           else
             return d + ": " + fatality_data[d] + " fatalities"; 
         });
-    
-
   });
 
   function monthPath(t0) {
@@ -166,37 +173,22 @@
 
   };
 
+  // console.log(data_lookup);
+
   heatmapRadioActions();
 
+  d3.selectAll('.day').on('click', function(d){
+    // console.log(d);
+    // console.log(data_lookup[d]);
+    s = JSON.stringify(data_lookup[d])
+    d3.select('.cd-panel-content').html(s);
+  });
+
   $("#slider").bind("valuesChanging", function(e, data){
-    // var minimumDay = data.values.min.getDate();
-    // var minimumMonth = data.values.min.getMonth();
-    // var minimumYear = data.values.min.getYear();
-
     var minimumDate = data.values.min;
-
-    // var maximumDay = data.values.max.getDate();
-    // var maximumMonth = data.values.max.getMonth();
-    // var maximumYear = data.values.max.getYear();
-
     var maximumDate = data.values.max;
 
     d3.selectAll('.day').filter(function(d){
-      //  [0] - year
-      //  [1] - month
-      //  [2] - day
-      // var date = d.split('-');
-      // var currentYear = parseInt(date[0]);
-      // var currentMonth = parseInt(date[1]);
-      // var currentDay = parseInt(date[2]);
-      // console.log(date);
-
-      // console.log(maximumDay);
-      // console.log(maximumMonth);
-      // console.log(maximumYear);
-
-      // console.log(((minimumYear <= currentYear && currentYear <= maximumYear) && (minimumMonth <= currentMonth && currentMonth <= maximumMonth) && (minimumDay <= currentDay && currentDay <= maximumDay)));
-      // return ((minimumYear <= currentYear && currentYear <= maximumYear) && (minimumMonth <= currentMonth && currentMonth <= maximumMonth) && (minimumDay <= currentDay && currentDay <= maximumDay)) ? 'visible' : 'hidden'; 
 
       var currentDate = Date.parse(d);
 
@@ -206,6 +198,5 @@
       else
         return d3.select(this).classed('q-invisible', true);
     });
-
   });
 })();
