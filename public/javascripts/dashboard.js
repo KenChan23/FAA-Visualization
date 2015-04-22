@@ -85,6 +85,7 @@
             return d + ": " + fatality_data[d] + " fatalities"; 
         });
     
+
   });
 
   function monthPath(t0) {
@@ -167,7 +168,44 @@
 
   heatmapRadioActions();
 
-  d3.select("#side-button").on("click", function(){
+  $("#slider").bind("valuesChanging", function(e, data){
+    // var minimumDay = data.values.min.getDate();
+    // var minimumMonth = data.values.min.getMonth();
+    // var minimumYear = data.values.min.getYear();
+
+    var minimumDate = data.values.min;
+
+    // var maximumDay = data.values.max.getDate();
+    // var maximumMonth = data.values.max.getMonth();
+    // var maximumYear = data.values.max.getYear();
+
+    var maximumDate = data.values.max;
+
+    d3.selectAll('.day').style('visibility', function(d){
+      //  [0] - year
+      //  [1] - month
+      //  [2] - day
+      // var date = d.split('-');
+      // var currentYear = parseInt(date[0]);
+      // var currentMonth = parseInt(date[1]);
+      // var currentDay = parseInt(date[2]);
+      // console.log(date);
+
+      // console.log(maximumDay);
+      // console.log(maximumMonth);
+      // console.log(maximumYear);
+
+      // console.log(((minimumYear <= currentYear && currentYear <= maximumYear) && (minimumMonth <= currentMonth && currentMonth <= maximumMonth) && (minimumDay <= currentDay && currentDay <= maximumDay)));
+      // return ((minimumYear <= currentYear && currentYear <= maximumYear) && (minimumMonth <= currentMonth && currentMonth <= maximumMonth) && (minimumDay <= currentDay && currentDay <= maximumDay)) ? 'visible' : 'hidden'; 
+
+      var currentDate = Date.parse(d);
+
+      if(minimumDate <= currentDate && currentDate <= maximumDate){
+        return 'visible';
+      }
+      else
+        return 'hidden'
+    });
 
   });
 })();

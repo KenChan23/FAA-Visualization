@@ -42,34 +42,18 @@ body {
 
 .cd-panel.is-visible {
   visibility: visible;
-  transition: visibility 0s 0s;
-}
-
-.cd-panel-header {
-  /*...*/
-  
-  right: 0px;
-  float: right;
-  position: fixed;
-  top: 0px;
-  width: 33%;
-  height: 25%;
-  transition: top 0.3s 0s;
-}
-
-.is-visible .cd-panel-header {
-  top: 0;
-  transition: top 0.3s 0.3s;
+  transition: visibility 0.3s 0.3s;
 }
 
 .cd-panel-container {
   /*...*/
   
-  height: 75%;
+  background-color: #A00F00;
+  height: 100%;
   position: fixed;
   width: 33%;
   height: 100%;
-  top: 25%;
+  top: 0;
   right: 0;
   transition-property: transform;
   transition-duration: 0.3s;
@@ -79,7 +63,7 @@ body {
 
 .is-visible .cd-panel-container {
   transform: translate3d(0, 0, 0);
-  transition-delay: 0s;
+  transition-delay: 0.3s;
 }
 /****/
 
@@ -92,6 +76,28 @@ input[type="radio"]:checked+label:after {
   position: relative;
   float: right;
   right: 50px;
+}
+
+#slider {
+  float: left;
+  width: 50%;
+  margin: 0px 15px;
+}
+
+.ui-rangeSlider-bar {
+  background: #A00F00;
+}
+
+.ui-rangeSlider-arrow {
+  width: 23px;
+}
+
+.ui-rangeSlider-rightArrow .ui-rangeSlider-arrow-inner {
+  margin-right: -5px;
+}
+
+.ui-rangeSlider-leftArrow .ui-rangeSlider-arrow-inner {
+  margin-left: -5px;
 }
 /**
 
