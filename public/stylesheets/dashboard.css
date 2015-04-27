@@ -89,6 +89,50 @@ input[type="radio"]:checked+label:after {
   top: 10px;
 }
 
+#heatmap-panel {
+  max-width: 750px !important;
+  display: inline-block;
+}
+
+#bar-charts {
+  display: inline-block;
+  position: relative;
+  height: 500px;
+  width: 45%;
+}
+
+#bar-chart-a {
+  top: 0px;
+  left: 0px;
+  height: 250px;
+  width: 300px;
+  display: inline-block;
+}
+
+#bar-chart-b {
+  top: 0px;
+  right: 0px;
+  height: 250px;
+  width: 300px;
+  display: inline-block;
+}
+
+#bar-chart-c {
+  bottom: 0px;
+  left: 0px;
+  height: 250px;
+  width: 300px;
+  display: inline-block;
+}
+
+#bar-chart-d {
+  bottom: 0px;
+  right: 0px;
+  height: 250px;
+  width: 300px;
+  display: inline-block;
+}
+
 #slider {
   float: left;
   width: 50%;
@@ -134,68 +178,52 @@ input[type="radio"]:checked+label:after {
   stroke-width: 2px;
 }
 
-.RdYlGn .q-fatality0-13 {
-  fill: rgb(255, 255, 255)
+.RdYlGn .q-color0-10 {
+  fill: #FFFFFF;
 }
 
-.RdYlGn .q-fatality1-13 {
-  fill: rgb(255, 205, 46)
+.RdYlGn .q-color1-10 {
+  fill: #FFFFCC;
 }
 
-.RdYlGn .q-fatality2-13 {
-  fill: rgb(255, 180, 23)
+.RdYlGn .q-color2-10 {
+  fill: #FFEDA0;
 }
 /**/
 
-.RdYlGn .q-fatality3-13 {
-  fill: rgb(255, 156, 0)
+.RdYlGn .q-color3-10 {
+  fill: #FED976;
 }
 
-.RdYlGn .q-fatality4-13 {
-  fill: rgb(255, 142, 0)
+.RdYlGn .q-color4-10 {
+  fill: #FEB24C;
 }
 /**/
 
-.RdYlGn .q-fatality5-13 {
-  fill: rgb(255, 133, 0)
+.RdYlGn .q-color5-10 {
+  fill: #FD8D3C;
 }
 /**/
 
-.RdYlGn .q-fatality6-13 {
-  fill: rgb(255, 119, 1)
+.RdYlGn .q-color6-10 {
+  fill: #FC4E2A;
 }
 
-.RdYlGn .q-fatality7-13 {
-  fill: rgb(247, 101, 1)
+.RdYlGn .q-color7-10 {
+  fill: #E31A1C;
 }
 /**/
 
-.RdYlGn .q-fatality8-13 {
-  fill: rgb(234, 88, 1)
+.RdYlGn .q-color8-10 {
+  fill: #BD0026;
 }
 /**/
 
-.RdYlGn .q-fatality9-13 {
-  fill: rgb(226, 72, 0)
-}
-
-.RdYlGn .q-fatality10-13 {
-  fill: rgb(213, 50, 0)
+.RdYlGn .q-color9-10 {
+  fill: #800026;
 }
 /**/
-
-.RdYlGn .q-fatality11-13 {
-  fill: rgb(204, 34, 0)
-}
-
-.RdYlGn .q-fatality12-13 {
-  fill: rgb(160, 15, 0)
-}
 /**/
-
-.RdYlGn .q-fatality13-13 {
-  fill: rgb(134, 2, 0)
-}
 
 .q-invisible {
   fill: white !important;
