@@ -5,43 +5,81 @@ html(lang='en')
     link(rel='shortcut icon' href='/images/airplane.png')
     link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Oxygen')
-    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css')
     link(rel='stylesheet', href='/stylesheets/slider.css')
     link(rel='stylesheet', href='/stylesheets/dashboard.css')
-    script(type='type/javascript', src='//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js')
     script(type='type/javascript', src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js')
-    script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+    script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js')
     script(type='text/javascript', src='/javascripts/minified/jQAllRangeSliders.min.js')
+    script(type='type/javascript', src='//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js')
   body
     div#primary-head
       div#head-text
         h2.mayday-title MAYDAY
-        //- a.dropdown-button.btn(href='#' data-activates='weekdays') Weekdays
-        //- ul#weekdays.dropdown-content
-        //-   li
-        //-     a(href='#!') Sunday
-        //-   li.divider
-        //-   li
-        //-     a(href='#!') Monday
-        //-   li.divider
-        //-   li
-        //-     a(href='#!') Tuesday
-        //-   li.divider
-        //-   li
-        //-     a(href='#!') Wednesday
-        //-   li.divider
-        //-   li
-        //-     a(href='#!') Thursday
-        //-   li.divider
-        //-   li
-        //-     a(href='#!') Friday
-        //-   li.divider
-        //-   li
-        //-     a(href='#!') Saturday
-        //-   li.divider
+      ul#dropdown1.dropdown-content
+        li
+          a(href='#!') Sunday
+        li.divider
+        li
+          a(href='#!') Monday
+        li.divider
+        li
+          a(href='#!') Tuesday
+        li.divider
+        li
+          a(href='#!') Wednesday
+        li.divider
+        li
+          a(href='#!') Thursday
+        li.divider
+        li
+          a(href='#!') Friday
+        li.divider
+        li
+          a(href='#!') Saturday
+      a#weekday-dropdown.dropdown-button.btn(href='#' data-activates='dropdown1') 
+        span Weekdays
+      ul#dropdown2.dropdown-content
+        li
+          a(href='#!') January
+        li.divider
+        li
+          a(href='#!') February
+        li.divider
+        li
+          a(href='#!') March
+        li.divider
+        li
+          a(href='#!') April
+        li.divider
+        li
+          a(href='#!') May
+        li.divider
+        li
+          a(href='#!') June
+        li.divider
+        li
+          a(href='#!') July
+        li.divider
+        li
+          a(href='#!') August
+        li.divider
+        li
+          a(href='#!') September
+        li.divider
+        li
+          a(href='#!') October
+        li.divider
+        li
+          a(href='#!') November
+        li.divider
+        li
+          a(href='#!') December
+      a#month-dropdown.dropdown-button.btn(href='#' data-activates='dropdown2')
+        span Months
         //- h6.mayday-subtitle FAA Accident Visualization
       form(action="#").heatmap-filters
         p.accidents-input
@@ -52,6 +90,28 @@ html(lang='en')
           input(name='heatmap', type='radio', id='fatalities', checked)
           label(for="fatalities")
             | Fatalities
+      ul#dropdown3.dropdown-content
+      a#accident-type-dropdown.dropdown-button.btn(href='#' data-activates='dropdown3') 
+        span Accident Types
+      form(action="#").barchart-filters
+        div
+          p.total-hours-input
+            input(name='barchart', type='radio', id='total-hours-flown')
+            label(for="total-hours-flown")
+              | Total Hours Flown
+          p.total-hours-ninety-input
+            input(name='barchart', type='radio', id='total-hours-flown-ninety', checked)
+            label(for="total-hours-flown-ninety")
+              | Total Hours Flown (Past 90 Days)
+        div
+          p.total-hours-make-input
+            input(name='barchart', type='radio', id='total-hours-flown-make')
+            label(for="total-hours-flown-make")
+              | Total Hours Flown - Make/Model
+          p.total-hours-ninety-make-input
+            input(name='barchart', type='radio', id='total-hours-flown-ninety-make', checked)
+            label(for="total-hours-flown-ninety-make")
+              | Total Hours Flown (Past 90 Days) - Make/Model
     div#side-button
       i.mdi-navigation-arrow-back  
     
@@ -65,5 +125,6 @@ html(lang='en')
     div#matrix-scatterplot-panel
     script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
     script(type='text/javascript', src='/javascripts/minified/sidebutton.min.js')
+    script(type='text/javascript', src='/javascripts/minified/dropdown.min.js')
     script(type='text/javascript', src='/javascripts/minified/dashboard.min.js')
     script(type='text/javascript', src='/javascripts/minified/barchart.min.js')

@@ -326,6 +326,21 @@
                   .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
                   .on('click', checkboxChecked);
 
+    // inputs = d3.select('#dropdown3')
+    //             .selectAll('input')
+    //             .data(commonKeyValues)
+    //             .enter()
+    //             .append('label')
+    //               .attr('display', 'block')
+    //               .text(function(d){return d;})
+    //             .append('input')
+    //               .attr('type', 'checkbox')
+    //               .attr('name', 'accident_type')
+    //               .attr('value', function(d){return d;})
+    //               .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
+    //               .on('click', checkboxChecked);
+
+
     // inputs.append('label').text(function(d){return d;})
 
   });

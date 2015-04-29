@@ -45,6 +45,7 @@ module.exports = function(grunt){
           'public/javascripts/minified/dashboard.min.js' : ['public/javascripts/dashboard.js'],
           'public/javascripts/minified/map.min.js' : ['public/javascripts/map.js'],
           'public/javascripts/minified/sidebutton.min.js' : ['public/javascripts/sidebutton.js'],
+          'public/javascripts/minified/dropdown.min.js' : ['public/javascripts/dropdown.js'],
           'public/javascripts/minified/customslider.min.js' : ['public/javascripts/customslider.js'],
           'public/javascripts/minified/barchart.min.js' : ['public/javascripts/barchart.js']
         }

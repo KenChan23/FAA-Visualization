@@ -8,7 +8,8 @@ form p {
 }
 
 #primary-head {
-  width: 750px;
+  /*width: 750px;*/
+  
   display: block;
 }
 
@@ -87,13 +88,32 @@ input[type="radio"]:checked+label:after {
   background-color: #A00F00;
 }
 
-.heatmap-filters {
+input[type="radio"]:not(:checked)+label,
+[type="radio"]:checked+label {
+  font-size: 0.75rem !important;
+}
+
+.barchart-filters {
   margin-top: 5px;
   display: inline-block;
   position: relative;
   right: 50px;
   float: right;
   top: 10px;
+}
+
+.barchart-filters div {
+  display: inline-block;
+}
+
+.heatmap-filters {
+  /*margin-top: 5px;*/
+  
+  display: inline-block;
+  position: relative;
+  /*right: 50px;
+  float: right;
+  top: 10px;*/
 }
 
 #heatmap-panel {
@@ -109,6 +129,11 @@ input[type="radio"]:checked+label:after {
   width: 475px;
   float: right;
   margin-right: 53px;
+}
+
+.btn,
+.btn-large {
+  background-color: #A00F00 !important;
 }
 /*#bar-chart-a {
   top: 0px;
