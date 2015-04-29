@@ -298,7 +298,6 @@
         .on('mouseout', hoverOff);
         // .on('mouseover', function(d) { this.attr('fill', 'red');});
 
-        // console.log("Before selected categories: " + selectedCategories.slice());
     var legend = svg.append("g").attr("class", "legend-group").selectAll(".legend")
         .data(selectedCategories.slice(), function(d) { return d; })
       .enter().append("g")
@@ -368,6 +367,7 @@
   generateBarChart("total_hours_flown", "Total Hours Flown");
 
   d3.selectAll('#total-hours-flown, #total-hours-flown-ninety, #total-hours-flown-make, #total-hours-flown-ninety-make').on('click', function() {
+        d3.select('#bar-charts').select('.legend-group').remove();
         d3.select('#bar-charts').select('svg').remove();
       if($('#total-hours-flown').is(':checked')) 
       {
