@@ -12,7 +12,8 @@ jQuery(document).ready(function($){
     }
     else
     {
-      $('.cd-panel').addClass('is-visible').css({'z-index': 9999});
+      $('.cd-panel').addClass('is-visible');
+      $('.cd-panel').css({'z-index': '9999'});
       $(this).children('i').removeClass('mdi-navigation-arrow-back');
       $(this).children('i').addClass('mdi-navigation-arrow-forward')
              .css({'font-size': '48px', 'color': 'white'});
