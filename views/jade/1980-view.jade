@@ -19,67 +19,52 @@ html(lang='en')
     div#primary-head
       div#head-text
         h2.mayday-title MAYDAY
-      ul#dropdown1.dropdown-content
-        li
-          a(href='#!') Sunday
-        li.divider
-        li
-          a(href='#!') Monday
-        li.divider
-        li
-          a(href='#!') Tuesday
-        li.divider
-        li
-          a(href='#!') Wednesday
-        li.divider
-        li
-          a(href='#!') Thursday
-        li.divider
-        li
-          a(href='#!') Friday
-        li.divider
-        li
-          a(href='#!') Saturday
-      a#weekday-dropdown.dropdown-button.btn(href='#' data-activates='dropdown1') 
-        span Weekdays
-      ul#dropdown2.dropdown-content
-        li
-          a(href='#!') January
-        li.divider
-        li
-          a(href='#!') February
-        li.divider
-        li
-          a(href='#!') March
-        li.divider
-        li
-          a(href='#!') April
-        li.divider
-        li
-          a(href='#!') May
-        li.divider
-        li
-          a(href='#!') June
-        li.divider
-        li
-          a(href='#!') July
-        li.divider
-        li
-          a(href='#!') August
-        li.divider
-        li
-          a(href='#!') September
-        li.divider
-        li
-          a(href='#!') October
-        li.divider
-        li
-          a(href='#!') November
-        li.divider
-        li
-          a(href='#!') December
-      a#month-dropdown.dropdown-button.btn(href='#' data-activates='dropdown2')
-        span Months
+      div#dropdown1-group
+        ul#dropdown1.dropdown-content
+          li
+            a(href='#!') Sunday
+          li
+            a(href='#!') Monday
+          li
+            a(href='#!') Tuesday
+          li
+            a(href='#!') Wednesday
+          li
+            a(href='#!') Thursday
+          li
+            a(href='#!') Friday
+          li
+            a(href='#!') Saturday
+        a#weekday-dropdown.dropdown-button.btn(href='#!' data-activates='dropdown1') 
+          span Weekdays
+      div#dropdown2-group
+        ul#dropdown2.dropdown-content
+          li
+            a(href='#!') January
+          li
+            a(href='#!') February
+          li
+            a(href='#!') March
+          li
+            a(href='#!') April
+          li
+            a(href='#!') May
+          li
+            a(href='#!') June
+          li
+            a(href='#!') July
+          li
+            a(href='#!') August
+          li
+            a(href='#!') September
+          li
+            a(href='#!') October
+          li
+            a(href='#!') November
+          li
+            a(href='#!') December
+        a#month-dropdown.dropdown-button.btn(href='#!' data-activates='dropdown2')
+          span Months
         //- h6.mayday-subtitle FAA Accident Visualization
       form(action="#").heatmap-filters
         p.accidents-input
@@ -90,9 +75,10 @@ html(lang='en')
           input(name='heatmap', type='radio', id='fatalities', checked)
           label(for="fatalities")
             | Fatalities
-      ul#dropdown3.dropdown-content
-      a#accident-type-dropdown.dropdown-button.btn(href='#' data-activates='dropdown3') 
-        span Accident Types
+      div#dropdown3-group
+        ul#dropdown3.dropdown-content
+        a#accident-type-dropdown.dropdown-button.btn(href='#!' data-activates='dropdown3') 
+          span Accident Types
       form(action="#").barchart-filters
         div
           p.total-hours-input
@@ -125,6 +111,5 @@ html(lang='en')
     div#matrix-scatterplot-panel
     script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
     script(type='text/javascript', src='/javascripts/minified/sidebutton.min.js')
-    script(type='text/javascript', src='/javascripts/minified/dropdown.min.js')
     script(type='text/javascript', src='/javascripts/minified/dashboard.min.js')
     script(type='text/javascript', src='/javascripts/minified/barchart.min.js')

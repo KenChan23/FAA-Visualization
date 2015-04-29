@@ -1,6 +1,3 @@
-  var counter1 = 0;
-  var category_data;
-
 (function(){
 
   //  Initialize scale 
@@ -246,91 +243,6 @@
     });
   });
 
-
-  // function generateBarCharts(data) {
-  //   var margin = {top: 80, right: 180, bottom: 80, left: 180},
-  //   width = 960 - margin.left - margin.right,
-  //   height = 500 - margin.top - margin.bottom;
-
-  //   var x = d3.scale.ordinal()
-  //   .rangeRoundBands([0, width], .1, .3);
-
-  //   var y = d3.scale.linear()
-  //       .range([height, 0]);
-
-  //   var xAxis = d3.svg.axis()
-  //       .scale(x)
-  //       .orient("bottom");
-
-  //   var yAxis = d3.svg.axis()
-  //       .scale(y)
-  //       .orient("left")
-  //       .ticks(8, "%");
-
-  //     var svgA = d3.select("body").select("#bar-charts").select("#bar-chart-a").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','black')
-  //   .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")")
-  //   .append("text").attr("class", "title").attr("x", ).attr("y", -26)
-  //     .text("Total Hours Flown - Past 90 Days");
-
-  // var svgB = d3.select("body").select("#bar-charts").select("#bar-chart-b").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','red')
-  // .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
-
-  // var svgC = d3.select("body").select("#bar-charts").select("#bar-chart-c").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','blue')
-  // .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
-
-  // var svgD = d3.select("body").select("#bar-charts").select("#bar-chart-d").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','green')
-  // .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
-
-  //   x.domain(data.map(function(d) { return d.name; }));
-  //   y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-  //   svg.append("text")
-  //       .attr("class", "title")
-  //       .attr("x", x(data[0].name))
-  //       .attr("y", -26)
-  //       .text("Total Hours Flown - Past 90 Days");
-
-  //   svg.append("g")
-  //       .attr("class", "x axis")
-  //       .attr("transform", "translate(0," + height + ")")
-  //       .call(xAxis)
-  //     .selectAll(".tick text")
-  //       .call(wrap, x.rangeBand());
-
-  //   svg.append("g")
-  //       .attr("class", "y axis")
-  //       .call(yAxis);
-
-  //   svg.selectAll(".bar")
-  //       .data(data)
-  //     .enter().append("rect")
-  //       .attr("class", "bar")
-  //       .attr("x", function(d) { return x(d.name); })
-  //       .attr("width", x.rangeBand())
-  //       .attr("y", function(d) { return y(d.value); })
-  //       .attr("height", function(d) { return height - y(d.value); });
-  // }
-
-  function generateBarCharts(data) {
-
-  }
-
   function wrap(text, width) {
     text.each(function() {
     var text = d3.select(this),
@@ -350,8 +262,38 @@
         tspan.text(line.join(" "));
         line = [word];
         tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        }
       }
-    }
+    });
+  }
+
+  $('#weekday-dropdown.btn.dropdown-button').click(function(){
+        $('ul#dropdown1').show(); 
+        $('ul#dropdown1').css({'opacity': 1}); 
+    });
+  $('#month-dropdown.btn.dropdown-button').click(function(){
+        $('ul#dropdown2').show(); 
+        $('ul#dropdown2').css({'opacity': 1}); 
+    });
+  $('#accident-type-dropdown.btn.dropdown-button').click(function(){
+        $('ul#dropdown3').show(); 
+        $('ul#dropdown3').css({'opacity': 1}); 
+    });
+
+  $('ul#dropdown1 li a').click(function(e){
+         $('#weekday-dropdown.btn.dropdown-button span').text($(this).text());
+         $('ul#dropdown1').hide();
+         $('ul#dropdown1').css({'opacity': 0}); 
   });
-}
+  $('ul#dropdown2 li a').click(function(e){
+         $('#month-dropdown.btn.dropdown-button span').text($(this).text());
+         $('ul#dropdown2').hide();
+         $('ul#dropdown2').css({'opacity': 0}); 
+  });
+  // $('ul#dropdown3 li a').click(function(e){
+  //        $('#accident-type-dropdown.btn.dropdown-button span').text($(this).text());
+  //        $('ul#dropdown3').hide();
+  //        $('ul#dropdown3').css({'opacity': 0}); 
+  // });
+
 })();

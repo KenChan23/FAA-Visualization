@@ -93,6 +93,34 @@ input[type="radio"]:not(:checked)+label,
   font-size: 0.75rem !important;
 }
 
+#dropdown1-group {
+  display: inline-block;
+}
+
+#dropdown2-group {
+  display: inline-block;
+}
+
+#dropdown3-group {
+  display: inline-block;
+}
+
+ul li a {
+  color: #9D0D00 !important;
+}
+
+#dropdown1 {
+  z-index: 999;
+}
+
+#dropdown2 {
+  z-index: 999;
+}
+
+#dropdown3 {
+  z-index: 999;
+}
+
 .barchart-filters {
   margin-top: 5px;
   display: inline-block;

@@ -2,6 +2,7 @@
   var category_data;
   var formattedCategoryData;
   var selectedCategories;
+  var aggregate_data = {};
 
   var binXAxis = [];
 
@@ -211,6 +212,7 @@
       for(var i in obj1) {
         if(i in obj2 && i in obj3 && i in obj4 && i in obj5 && i in obj6 && i !== "null" && i !== "bin") {
           keys.push(i);
+          aggregate_data[i] = 0;
         }
       }              
       return keys;
@@ -225,15 +227,17 @@
       for(var i = 0; i < commonKeyValues.length; i++)
       {
         obj[commonKeyValues[i]] = d[commonKeyValues[i]];
+        aggregate_data[commonKeyValues[i]] += d[commonKeyValues[i]];
       }
 
       return obj;
     });
 
-    // console.log(category_data);
-    // console.log(formattedCategoryData);
-    // console.log(commonKeyValues);
-    // console.log(barChartData);
+    console.log(category_data);
+    console.log(formattedCategoryData);
+    console.log(commonKeyValues);
+    console.log(barChartData);
+    console.log(aggregate_data);
 
     selectedCategories = commonKeyValues.filter(function(key, i) { return i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5; });
 
@@ -312,21 +316,7 @@
         .text(function(d) { return d; });
 
         // Need hover feature...
-    inputs = d3.select('body')
-                .selectAll('input')
-                .data(commonKeyValues)
-                .enter()
-                .append('label')
-                  .attr('display', 'block')
-                  .text(function(d){return d;})
-                .append('input')
-                  .attr('type', 'checkbox')
-                  .attr('name', 'accident_type')
-                  .attr('value', function(d){return d;})
-                  .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
-                  .on('click', checkboxChecked);
-
-    // inputs = d3.select('#dropdown3')
+    // inputs = d3.select('body')
     //             .selectAll('input')
     //             .data(commonKeyValues)
     //             .enter()
@@ -339,6 +329,24 @@
     //               .attr('value', function(d){return d;})
     //               .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
     //               .on('click', checkboxChecked);
+
+    inputs = d3.select('#dropdown3')
+                .selectAll('input')
+                .data(commonKeyValues)
+                .enter()
+                .append('li')
+                  // .attr('display', 'block')
+                  // .text(function(d){return d;})
+                .append('a')
+                .text(function(d){return d + ' ' + '(' + aggregate_data[d] + ')';})
+                .append('input')
+                  .attr('type', 'checkbox')
+                  .attr('name', 'accident_type')
+                  .attr('value', function(d){return d;})
+                  // .attr('right', '25px')
+                  .style('left', '515px')
+                  .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
+                  .on('click', checkboxChecked);
 
 
     // inputs.append('label').text(function(d){return d;})
