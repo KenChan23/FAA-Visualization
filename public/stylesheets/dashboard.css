@@ -3,9 +3,13 @@ body {
   shape-rendering: crispEdges;
 }
 
+form p {
+  margin-bottom: 0px !important;
+}
+
 #primary-head {
-  width: 50%;
-  display: inline-block;
+  width: 750px;
+  display: block;
 }
 
 #head-text {
@@ -13,6 +17,7 @@ body {
 }
 
 .mayday-title {
+  font-family: 'Oxygen', Helvetica, Verdana, sans-serif;
   margin: 0px;
   padding-top: 10px;
   padding-left: 50px !important;
@@ -83,6 +88,7 @@ input[type="radio"]:checked+label:after {
 }
 
 .heatmap-filters {
+  margin-top: 5px;
   display: inline-block;
   position: relative;
   right: 50px;
@@ -93,16 +99,18 @@ input[type="radio"]:checked+label:after {
 #heatmap-panel {
   max-width: 750px !important;
   display: inline-block;
+  float: left;
 }
 
 #bar-charts {
   display: inline-block;
   position: relative;
   height: 500px;
-  width: 45%;
+  width: 475px;
+  float: right;
+  margin-right: 53px;
 }
-
-#bar-chart-a {
+/*#bar-chart-a {
   top: 0px;
   left: 0px;
   height: 250px;
@@ -132,17 +140,30 @@ input[type="radio"]:checked+label:after {
   height: 250px;
   width: 300px;
   display: inline-block;
-}
+}*/
 
 #slider {
   float: left;
-  width: 50%;
+  width: 705px;
   margin: 0px 15px;
   left: 15px;
 }
 
+.ui-rangeSlider-container {
+  width: 685px;
+}
+
+.ui-range-innerBar {
+  width: 685px;
+}
+
 .ui-rangeSlider-bar {
   background: #A00F00;
+  width: 685px;
+}
+
+.ui-rangeSlider-handle.ui-rangeSlider-rightHandle {
+  left: 685px;
 }
 
 .ui-rangeSlider-arrow {

@@ -4,9 +4,11 @@ html(lang='en')
     title= title
     link(rel='shortcut icon' href='/images/airplane.png')
     link(rel='stylesheet', href='/stylesheets/reset.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Oxygen')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css')
     link(rel='stylesheet', href='/stylesheets/slider.css')
     link(rel='stylesheet', href='/stylesheets/dashboard.css')
+    script(type='type/javascript', src='//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js')
     script(type='type/javascript', src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js')
     script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js')
@@ -16,8 +18,31 @@ html(lang='en')
   body
     div#primary-head
       div#head-text
-        h4.mayday-title MAYDAY
-        h6.mayday-subtitle FAA Accident Visualization
+        h2.mayday-title MAYDAY
+        //- a.dropdown-button.btn(href='#' data-activates='weekdays') Weekdays
+        //- ul#weekdays.dropdown-content
+        //-   li
+        //-     a(href='#!') Sunday
+        //-   li.divider
+        //-   li
+        //-     a(href='#!') Monday
+        //-   li.divider
+        //-   li
+        //-     a(href='#!') Tuesday
+        //-   li.divider
+        //-   li
+        //-     a(href='#!') Wednesday
+        //-   li.divider
+        //-   li
+        //-     a(href='#!') Thursday
+        //-   li.divider
+        //-   li
+        //-     a(href='#!') Friday
+        //-   li.divider
+        //-   li
+        //-     a(href='#!') Saturday
+        //-   li.divider
+        //- h6.mayday-subtitle FAA Accident Visualization
       form(action="#").heatmap-filters
         p.accidents-input
           input(name='heatmap', type='radio', id='accidents')
@@ -30,19 +55,15 @@ html(lang='en')
     div#side-button
       i.mdi-navigation-arrow-back  
     
-
     div.cd-panel.from-right
         div.cd-panel-container
           div.cd-panel-content
             p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam magnam accusamus obcaecati nisi eveniet quo veniam quibusdam veritatis autem accusantium doloribus nam mollitia maxime explicabo nemo quae aspernatur impedit cupiditate dicta molestias consectetur, sint reprehenderit maiores. Tempora, exercitationem, voluptate. Sapiente modi officiis nulla sed ullam, amet placeat, illum necessitatibus, eveniet dolorum et maiores earum tempora, quas iste perspiciatis quibusdam vero accusamus veritatis. Recusandae sunt, repellat incidunt impedit tempore iusto, nostrum eaque necessitatibus sint eos omnis! Beatae, itaque, in. Vel reiciendis consequatur saepe soluta itaque aliquam praesentium, neque tempora. Voluptatibus sit, totam rerum quo ex nemo pariatur tempora voluptatem est repudiandae iusto, architecto perferendis sequi, asperiores dolores doloremque odit. Libero, ipsum fuga repellat quae numquam cumque nobis ipsa voluptates pariatur, a rerum aspernatur aliquid maxime magnam vero dolorum omnis neque fugit laboriosam eveniet veniam explicabo, similique reprehenderit at. Iusto totam vitae blanditiis. Culpa, earum modi rerum velit voluptatum voluptatibus debitis, architecto aperiam vero tempora ratione sint ullam voluptas non! Odit sequi ipsa, voluptatem ratione illo ullam quaerat qui, vel dolorum eligendi similique inventore quisquam perferendis reprehenderit quos officia! Maxime aliquam, soluta reiciendis beatae quisquam. Alias porro facilis obcaecati et id, corporis accusamus? Ab porro fuga consequatur quisquam illo quae quas tenetur.
     div#heatmap-panel
     div#bar-charts
-      div#bar-chart-a
-      div#bar-chart-b
-      div#bar-chart-c
-      div#bar-chart-d
     div#slider
     div#matrix-scatterplot-panel
     script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
     script(type='text/javascript', src='/javascripts/minified/sidebutton.min.js')
     script(type='text/javascript', src='/javascripts/minified/dashboard.min.js')
+    script(type='text/javascript', src='/javascripts/minified/barchart.min.js')
