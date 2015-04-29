@@ -1,3 +1,6 @@
+  var counter1 = 0;
+  var category_data;
+
 (function(){
 
   //  Initialize scale 
@@ -7,15 +10,11 @@
   var data_lookup = {}; 
   var accident_data;
   var fatality_data;
-  var barchartA_data;
 
   var width = 750,
       height = 100,
       // cellSize = 17; // cell size
       cellSize = 13;
-
-  var chartWidth = 300,
-      chartHeight = 250;
 
   var day = d3.time.format("%w"),
       week = d3.time.format("%U"),
@@ -70,37 +69,6 @@
       .attr("class", "month")
       .attr("d", monthPath);
 
-  //  append bar charts
-  // var svgA = d3.select("body").select("#bar-charts").select("#bar-chart-a").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','black')
-  //   .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")")
-  //   .append("text").attr("class", "title").attr("x", ).attr("y", -26)
-  //     .text("Total Hours Flown - Past 90 Days");
-
-  // var svgB = d3.select("body").select("#bar-charts").select("#bar-chart-b").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','red')
-  // .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
-
-  // var svgC = d3.select("body").select("#bar-charts").select("#bar-chart-c").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','blue')
-  // .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
-
-  // var svgD = d3.select("body").select("#bar-charts").select("#bar-chart-d").append("svg")
-  //   .attr("width", chartWidth)
-  //   .attr("height", chartHeight)
-  //   .style('background-color','green')
-  // .append("g")
-  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
-
   d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv) {
 
     csv.forEach(function(d){
@@ -142,12 +110,22 @@
         return d.length; 
       }).map(csv);
 
-    // barchartA_data = d3.nest()
-    //   .key(function(d){ return d.date; })
-    //   .rollup(function(d){
-    //     //  Count of accidents...
-    //     return d.length; 
-    //   }).map(csv);
+    // category_data = d3.nest().key(function(d){
+    //   return d.primary_cause;
+    // }).rollup(function(d){
+    //   return (d3.sum(d, function(g){
+    //       if(g.total_hours_flown !== null) return g.total_hours_flown;
+    //       else return 0;
+    //     })/d.length); 
+    // }).map(csv);
+
+  category_data = d3.nest().key(function(d){
+      return d.primary_cause;
+    }).rollup(function(d){
+      return d.length; 
+    }).map(csv);
+
+    // generateBarCharts(csv);
 
     //  Initialize the view.
     rect.filter(function(d) { return d in fatality_data; })
@@ -268,7 +246,12 @@
     });
   });
 
-  // function generateBarChartA(data) {
+
+  // function generateBarCharts(data) {
+  //   var margin = {top: 80, right: 180, bottom: 80, left: 180},
+  //   width = 960 - margin.left - margin.right,
+  //   height = 500 - margin.top - margin.bottom;
+
   //   var x = d3.scale.ordinal()
   //   .rangeRoundBands([0, width], .1, .3);
 
@@ -284,54 +267,72 @@
   //       .orient("left")
   //       .ticks(8, "%");
 
-  // var svg = d3.select("body").select("#bar-chart-a").append("svg")
-  //   .attr("width", width + margin.left + margin.right)
-  //   .attr("height", height + margin.top + margin.bottom)
+  //     var svgA = d3.select("body").select("#bar-charts").select("#bar-chart-a").append("svg")
+  //   .attr("width", chartWidth)
+  //   .attr("height", chartHeight)
+  //   .style('background-color','black')
   //   .append("g")
-  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  //   d3.tsv("data.tsv", type, function(error, data) {
-  // x.domain(data.map(function(d) { return d.name; }));
-  // y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-  // svg.append("text")
-  //     .attr("class", "title")
-  //     .attr("x", x(data[0].name))
-  //     .attr("y", -26)
+  //   .attr("transform", "translate(" + 0 + "," + 0 + ")")
+  //   .append("text").attr("class", "title").attr("x", ).attr("y", -26)
   //     .text("Total Hours Flown - Past 90 Days");
 
-  // svg.append("g")
-  //     .attr("class", "x axis")
-  //     .attr("transform", "translate(0," + height + ")")
-  //     .call(xAxis)
-  //   .selectAll(".tick text")
-  //     .call(wrap, x.rangeBand());
+  // var svgB = d3.select("body").select("#bar-charts").select("#bar-chart-b").append("svg")
+  //   .attr("width", chartWidth)
+  //   .attr("height", chartHeight)
+  //   .style('background-color','red')
+  // .append("g")
+  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
 
-  // svg.append("g")
-  //     .attr("class", "y axis")
-  //     .call(yAxis);
+  // var svgC = d3.select("body").select("#bar-charts").select("#bar-chart-c").append("svg")
+  //   .attr("width", chartWidth)
+  //   .attr("height", chartHeight)
+  //   .style('background-color','blue')
+  // .append("g")
+  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
 
-  // svg.selectAll(".bar")
-  //     .data(data)
-  //   .enter().append("rect")
-  //     .attr("class", "bar")
-  //     .attr("x", function(d) { return x(d.name); })
-  //     .attr("width", x.rangeBand())
-  //     .attr("y", function(d) { return y(d.value); })
-  //     .attr("height", function(d) { return height - y(d.value); });
-  // });
+  // var svgD = d3.select("body").select("#bar-charts").select("#bar-chart-d").append("svg")
+  //   .attr("width", chartWidth)
+  //   .attr("height", chartHeight)
+  //   .style('background-color','green')
+  // .append("g")
+  //   .attr("transform", "translate(" + 0 + "," + 0 + ")");
 
+  //   x.domain(data.map(function(d) { return d.name; }));
+  //   y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+  //   svg.append("text")
+  //       .attr("class", "title")
+  //       .attr("x", x(data[0].name))
+  //       .attr("y", -26)
+  //       .text("Total Hours Flown - Past 90 Days");
+
+  //   svg.append("g")
+  //       .attr("class", "x axis")
+  //       .attr("transform", "translate(0," + height + ")")
+  //       .call(xAxis)
+  //     .selectAll(".tick text")
+  //       .call(wrap, x.rangeBand());
+
+  //   svg.append("g")
+  //       .attr("class", "y axis")
+  //       .call(yAxis);
+
+  //   svg.selectAll(".bar")
+  //       .data(data)
+  //     .enter().append("rect")
+  //       .attr("class", "bar")
+  //       .attr("x", function(d) { return x(d.name); })
+  //       .attr("width", x.rangeBand())
+  //       .attr("y", function(d) { return y(d.value); })
+  //       .attr("height", function(d) { return height - y(d.value); });
   // }
 
-  
+  function generateBarCharts(data) {
 
-    function type(d) {
-    d.value = +d.value;
-    return d;
   }
 
   function wrap(text, width) {
-  text.each(function() {
+    text.each(function() {
     var text = d3.select(this),
         words = text.text().split(/\s+/).reverse(),
         word,

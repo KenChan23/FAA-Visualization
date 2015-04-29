@@ -32,6 +32,7 @@ body {
   background-color: #A00F00;
   height: 50px;
   width: 50px;
+  z-index: 9999;
 }
 
 .mdi-navigation-arrow-back {
