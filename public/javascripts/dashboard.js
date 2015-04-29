@@ -221,10 +221,12 @@
   heatmapRadioActions();
 
   d3.selectAll('.day').on('click', function(d){
-    // console.log(d);
-    // console.log(data_lookup[d]);
-    s = JSON.stringify(data_lookup[d])
-    d3.select('.cd-panel-content').html(s);
+
+    // s = JSON.stringify(data_lookup[d])
+    // d3.select('.cd-panel-content').html(s);
+    ko.applyBindings({
+      incidents: data_lookup[d]
+    });
   });
 
   $("#slider").bind("valuesChanging", function(e, data){

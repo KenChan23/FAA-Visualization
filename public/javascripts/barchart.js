@@ -210,6 +210,8 @@
         return obj;
       });
 
+      console.log(category_data);
+
     function commonKeys(obj1, obj2, obj3, obj4, obj5, obj6) {
       var keys = [];
       for(var i in obj1) {
@@ -374,5 +376,16 @@
       if($('#total-hours-flown-ninety-make').is(':checked'))
         generateBarChart("hours_model_flown_90_days", "Total Hours Flown (Past 90 Days) - Make/Model");
     }); 
+
+  $(document).mouseup(function (e)
+  {
+    var container = $("#dropdown3");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.hide();
+    }
+  });
 
 })();
