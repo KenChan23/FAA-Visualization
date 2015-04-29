@@ -30,11 +30,7 @@
       .orient("left")
       .tickFormat(d3.format(".2s"));
 
-  var svg = d3.select("#bar-charts").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg;
 
   function hoverBar(d) {
     // console.log(d);
@@ -178,15 +174,22 @@
   }
 
 
+  function generateBarChart(totalHoursParameter, xAxisTitle) {
+
+    svg = d3.select("#bar-charts").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv){
 
      category_data = d3.nest().key(function(d){
-        return 0 <= d.total_hours_flown && d.total_hours_flown < 200 ?
-          "0 - 199" : (200 <= d.total_hours_flown && d.total_hours_flown < 400 ?
-                        "200 - 399" : (400 <= d.total_hours_flown && d.total_hours_flown < 600 ?
-                                        "400 - 599" : (600 <= d.total_hours_flown && d.total_hours_flown < 800 ?
-                                                        "600 - 799" : (800 <= d.total_hours_flown && d.total_hours_flown < 1000 ?
+        return 0 <= d[totalHoursParameter] && d[totalHoursParameter] < 200 ?
+          "0 - 199" : (200 <= d[totalHoursParameter] && d[totalHoursParameter] < 400 ?
+                        "200 - 399" : (400 <= d[totalHoursParameter] && d[totalHoursParameter] < 600 ?
+                                        "400 - 599" : (600 <= d[totalHoursParameter] && d[totalHoursParameter] < 800 ?
+                                                        "600 - 799" : (800 <= d[totalHoursParameter] && d[totalHoursParameter] < 1000 ?
                                                                         "800 - 999" : "1000+"))));
       })
     .key(function(d) { return d.primary_cause; })
@@ -262,7 +265,7 @@
         .attr("x", width / 2)
         .style("text-anchor", "end")
         .style("z-index", 999)
-        .text("Total Hours Flown");;
+        .text(xAxisTitle);;
 
     svg.append("g")
         .attr("class", "y axis")
@@ -349,7 +352,27 @@
                   .on('click', checkboxChecked);
 
 
+      
+
     // inputs.append('label').text(function(d){return d;})
 
   });
+  }
+
+  generateBarChart("total_hours_flown", "Total Hours Flown");
+
+  d3.selectAll('#total-hours-flown, #total-hours-flown-ninety, #total-hours-flown-make, #total-hours-flown-ninety-make').on('click', function() {
+        d3.select('#bar-charts').select('svg').remove();
+      if($('#total-hours-flown').is(':checked')) 
+      {
+        generateBarChart("total_hours_flown", "Total Hours Flown");
+      }
+      if($('#total-hours-flown-ninety').is(':checked')) 
+        generateBarChart("hours_flown_90_days", "Total Hours Flown (Past 90 Days)");
+      if($('#total-hours-flown-make').is(':checked'))
+        generateBarChart("total_hours_model_flown", "Total Hours Flown - Make/Model");
+      if($('#total-hours-flown-ninety-make').is(':checked'))
+        generateBarChart("hours_model_flown_90_days", "Total Hours Flown (Past 90 Days) - Make/Model");
+    }); 
+
 })();
