@@ -290,6 +290,7 @@
          $('ul#dropdown2').hide();
          $('ul#dropdown2').css({'opacity': 0}); 
   });
+  
   // $('ul#dropdown3 li a').click(function(e){
   //        $('#accident-type-dropdown.btn.dropdown-button span').text($(this).text());
   //        $('ul#dropdown3').hide();
