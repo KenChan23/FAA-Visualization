@@ -120,6 +120,13 @@
         data_lookup[d.date] = [];
     });
 
+    csv.sort(sortByDateAscending);
+
+    function sortByDateAscending(a, b) {
+      // Dates will be cast to numbers automagically:
+      return parseDate(a.date) - parseDate(b.date);
+    }
+
     fatality_data = d3.nest()
       .key(function(d) {
         return d.date;
@@ -163,7 +170,7 @@
         accident_object.date = parseDate(d[0].date);
         accident_object.count = d.length;
         accident_data_array.push(accident_object);
-        console.log(accident_object.count);
+        console.log(accident_object);
         return accident_object.count;
       }).map(csv);
 
@@ -307,10 +314,10 @@
             .duration(1000)
             .attr("d", area2);
 
-            context.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + 50 + ")")
-            .call(xAxis2);
+            // context.append("g")
+            // .attr("class", "x axis")
+            // .attr("transform", "translate(0," + 50 + ")")
+            // .call(xAxis2);
 
         });
       if ($('#fatalities').is(':checked'))
@@ -332,10 +339,10 @@
             .duration(1000)
             .attr("d", area2);
 
-          context.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + 50 + ")")
-            .call(xAxis2);
+          // context.append("g")
+          //   .attr("class", "x axis")
+          //   .attr("transform", "translate(0," + 50 + ")")
+          //   .call(xAxis2);
 
         });
     });
