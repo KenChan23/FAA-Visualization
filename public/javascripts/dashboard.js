@@ -8,6 +8,7 @@
   var accident_data;
   var fatality_data;
   var fatality_data_array = [];
+  var accident_data_array = [];
 
   var width = 750,
     height = 100,
@@ -26,7 +27,7 @@
       return "q-color" + d + "-10";
     }));
 
-  console.log(fatality_color(30));
+  // console.log(fatality_color(30));
   //  Map input domain to discrete range.
 
   var accident_color = d3.scale.quantile()
@@ -154,11 +155,16 @@
         return d.date;
       })
       .rollup(function(d) {
-        //  Count of accidents...
-        // if(d.length > MAX_ACCIDENTS)
-        //   MAX_ACCIDENTS = d.length;
-        // console.log("Accidents: " + MAX_ACCIDENTS);
-        return d.length;
+        var accident_object = {
+          date: null,
+          count: null
+        };
+
+        accident_object.date = parseDate(d[0].date);
+        accident_object.count = d.length;
+        accident_data_array.push(accident_object);
+        console.log(accident_object.count);
+        return accident_object.count;
       }).map(csv);
 
     category_data = d3.nest().key(function(d) {
@@ -232,12 +238,12 @@
       var data;
       switch (id) {
         case "#fatalities":
-          console.log("inside case fatalities");
+          // console.log("inside case fatalities");
           data = fatality_data;
           color = fatality_color;
           break;
         case "#accidents":
-          console.log("inside case accidents");
+          // console.log("inside case accidents");
           data = accident_data;
           color = accident_color;
           break;
@@ -249,7 +255,7 @@
     }
 
     function renderRectangle(data, color, id) {
-      console.log("inside default");
+      // console.log("inside default");
       rect.filter(function(d) {
           return d in data;
         })
@@ -285,10 +291,52 @@
       if ($('#accidents').is(':checked'))
         rectVisibility('#accidents', function(data, color) {
           renderRectangle(data, color, "#accidents");
+
+          x.domain(d3.extent(accident_data_array.map(function(d) {
+            return d.date;
+          })));
+          y.domain([0, d3.max(accident_data_array.map(function(d) {
+            return d.count;
+          }))]);
+          x2.domain(x.domain());
+          y2.domain(y.domain());
+
+          context = d3.selectAll('g.context path.area')
+            .datum(accident_data_array)
+            .transition()
+            .duration(1000)
+            .attr("d", area2);
+
+            context.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + 50 + ")")
+            .call(xAxis2);
+
         });
       if ($('#fatalities').is(':checked'))
         rectVisibility('#fatalities', function(data, color) {
           renderRectangle(data, color, "#fatalities");
+
+          x.domain(d3.extent(fatality_data_array.map(function(d) {
+            return d.date;
+          })));
+          y.domain([0, d3.max(fatality_data_array.map(function(d) {
+            return d.count;
+          }))]);
+          x2.domain(x.domain());
+          y2.domain(y.domain());
+
+          context = d3.selectAll('g.context path.area')
+            .datum(fatality_data_array)
+            .transition()
+            .duration(1000)
+            .attr("d", area2);
+
+          context.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + 50 + ")")
+            .call(xAxis2);
+
         });
     });
 
@@ -301,7 +349,7 @@
   d3.selectAll('.day').on('click', function(d) {
 
     s = JSON.stringify(data_lookup[d])
-    console.log(s);
+    // console.log(s);
     d3.select('.cd-panel-content').html(s);
     // ko.applyBindings({
     //   incidents: data_lookup[d]
@@ -399,7 +447,7 @@
         break;
       case 'Sunday':
         d3.selectAll('rect.day').style('opacity', function(d) {
-          console.log(d3.select(this).attr('y'));
+          // console.log(d3.select(this).attr('y'));
           if (d3.select(this).attr('y') == 0) {
             return 1;
           } else {
