@@ -19,7 +19,16 @@ html(lang='en')
   body
     div#primary-head
       div#head-text
-        h2.mayday-title MAYDAY
+        h3.mayday-title MAYDAY
+      form(action="#").heatmap-filters
+        p.accidents-input
+          input(name='heatmap', type='radio', id='accidents')
+          label(for="accidents")
+            | Accidents
+        p.fatalities-input
+          input(name='heatmap', type='radio', id='fatalities', checked)
+          label(for="fatalities")
+            | Fatalities
       div#dropdown1-group
         ul#dropdown1.dropdown-content
           li
@@ -71,15 +80,6 @@ html(lang='en')
         a#month-dropdown.dropdown-button.btn(href='#!' data-activates='dropdown2')
           span Months
         //- h6.mayday-subtitle FAA Accident Visualization
-      form(action="#").heatmap-filters
-        p.accidents-input
-          input(name='heatmap', type='radio', id='accidents')
-          label(for="accidents")
-            | Accidents
-        p.fatalities-input
-          input(name='heatmap', type='radio', id='fatalities', checked)
-          label(for="fatalities")
-            | Fatalities
       div#dropdown3-group
         ul#dropdown3.dropdown-content
         a#accident-type-dropdown.dropdown-button.btn(href='#!' data-activates='dropdown3') 
@@ -113,9 +113,11 @@ html(lang='en')
               p(data-bind="text: city + ', ' state")
     div#heatmap-panel
     div#bar-charts
-    div#slider
+    //- div#slider
+    div#context-slider
     div#matrix-scatterplot-panel
-    script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
+    //- script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
     script(type='text/javascript', src='/javascripts/minified/sidebutton.min.js')
-    script(type='text/javascript', src='/javascripts/minified/dashboard.min.js')
+    //- script(type='text/javascript', src='/javascripts/minified/dashboard.min.js')
+    script(type='text/javascript', src='/javascripts/dashboard.js')
     script(type='text/javascript', src='/javascripts/minified/barchart.min.js')
