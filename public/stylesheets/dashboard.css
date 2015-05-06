@@ -136,10 +136,10 @@ ul li a {
   /*position: relative;*/
   /*right: 50px;*/
   
-  float: right;
+  /*float: right;*/
   /*top: 10px;*/
   
-  margin-right: 45px;
+  margin-left: 80px;
 }
 
 .barchart-filters div {
@@ -173,12 +173,12 @@ ul li a {
   float: left;
 }
 
-#bar-charts {
+#side-view {
   display: inline-block;
   position: relative;
   height: 500px;
   width: 475px;
-  float: right;
+  /*float: right;*/
   margin-right: 53px;
   margin-top: 15px;
 }

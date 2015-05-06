@@ -176,7 +176,7 @@
 
   function generateBarChart(totalHoursParameter, xAxisTitle) {
 
-    svg = d3.select("#bar-charts").append("svg")
+    svg = d3.select("#side-view").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -263,7 +263,7 @@
         .call(xAxis)
         .append("text")
         .attr("y", 24)
-        .attr("dy", ".71em")
+        .attr("dy", ".5em")
         .attr("x", width / 2 + 50)
         .style("text-anchor", "end")
         .style("z-index", 999)
@@ -369,8 +369,8 @@
   generateBarChart("total_hours_flown", "Total Hours Flown");
 
   d3.selectAll('#total-hours-flown, #total-hours-flown-ninety, #total-hours-flown-make, #total-hours-flown-ninety-make').on('click', function() {
-        d3.select('#bar-charts').select('.legend-group').remove();
-        d3.select('#bar-charts').select('svg').remove();
+        d3.select('#side-view').select('.legend-group').remove();
+        d3.select('#side-view').select('svg').remove();
       if($('#total-hours-flown').is(':checked')) 
       {
         generateBarChart("total_hours_flown", "Total Hours Flown");
