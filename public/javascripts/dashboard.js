@@ -189,6 +189,26 @@ var mapViewModule = mapViewModule || {};
         return accident_object.count;
       }).map(csv);
 
+      //  Just checking the distribution of weather
+      weather_data = d3.nest()
+      .key(function(d) {
+        return d.weather;
+      })
+      .rollup(function(d) {
+        // var accident_object = {
+        //   date: null,
+        //   count: null
+        // };
+
+        // accident_object.date = parseDate(d[0].date);
+        // accident_object.count = d.length;
+        // accident_data_array.push(accident_object);
+        // console.log(accident_object);
+        return d.length;
+      }).map(csv);
+
+    console.log(weather_data);
+
     category_data = d3.nest().key(function(d) {
       return d.primary_cause;
     }).rollup(function(d) {
@@ -370,8 +390,8 @@ var mapViewModule = mapViewModule || {};
 
   d3.selectAll('.day').on('click', function(d) {
 
-    s = JSON.stringify(data_lookup[d])
-    // console.log(s);
+    s = JSON.stringify(data_lookup[d]);
+    console.log(data_lookup[d]);
     d3.select('.cd-panel-content').html(s);
     // ko.applyBindings({
     //   incidents: data_lookup[d]
@@ -393,6 +413,31 @@ var mapViewModule = mapViewModule || {};
   //       return d3.select(this).classed('q-invisible', true);
   //   });
   // });
+
+  d3.selectAll('#bargraph-view, #mapview-view').on('click', function() {
+    console.log("Inside");
+    if ($('#bargraph-view').is(':checked'))
+    {
+      console.log("Bargraph");
+      d3.select("#side-view").select("svg").remove();
+      d3.selectAll("#dropdown3 li").remove();
+      barChartModule.create();
+    }
+    if ($('#mapview-view').is(':checked'))
+    {
+      console.log("Mapview");
+      d3.select("#side-view").select("svg").remove();
+      mapViewModule.create();
+    }
+  });
+
+  // d3.selectAll('rect.day').on('mouseover', function() {
+  //   d3.select(this).style('stroke', 'black');
+  // }).on('mouseoff', function(){
+  //   d3.select(this).style('stroke', '#ccc');
+  // });
+
+
 
   function wrap(text, width) {
     text.each(function() {
@@ -685,19 +730,5 @@ var mapViewModule = mapViewModule || {};
 
   });
 
-  d3.selectAll('#bargraph-view, #mapview-view').on('click', function() {
-    console.log("Inside");
-    if ($('#bargraph-view').is(':checked'))
-    {
-      console.log("Bargraph");
-      d3.select("#side-view").select("svg").remove();
-      barChartModule.create();
-    }
-    if ($('#mapview-view').is(':checked'))
-    {
-      console.log("Mapview");
-      d3.select("#side-view").select("svg").remove();
-      mapViewModule.create();
-    }
-  });
+
 })(this);

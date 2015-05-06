@@ -8,6 +8,7 @@ var barChartModule = (function(){
     var formattedCategoryData;
     var selectedCategories;
     var aggregate_data = {};
+    var barChartData;
 
     var binXAxis = [];
 
@@ -110,7 +111,7 @@ var barChartModule = (function(){
 
           //  Enter
 
-          enter_legend = legend.enter().append('g').attr('class', 'legend').attr("transform", function(d, i) { return "translate(-100," + i * 12 + ")"; });
+          var enter_legend = legend.enter().append('g').attr('class', 'legend').attr("transform", function(d, i) { return "translate(-100," + i * 12 + ")"; });
 
           enter_legend.append("rect")
           .attr("x", width - 18)
@@ -134,7 +135,7 @@ var barChartModule = (function(){
 
         }
 
-      input_checked_count = d3.nest().key(function(d){
+      var input_checked_count = d3.nest().key(function(d){
           return d.checked === true ? "true" : "false";
         }).rollup(function(d){
           return d.length; 
@@ -230,7 +231,7 @@ var barChartModule = (function(){
 
       var commonKeyValues = commonKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
 
-      var barChartData = formattedCategoryData.map(function(d){
+      barChartData = formattedCategoryData.map(function(d){
         var obj = {};
 
         obj["bin"] = d["bin"];
