@@ -1,74 +1,83 @@
-(function() {
-  var width = 960,
-    height = 600;
+var mapViewModule = (function(){
+  "use strict";
 
-  var formatNumber = d3.format(",.0f");
+  var mapView = {};
 
-  var path = d3.geo.path()
-    .projection(null);
+  mapView.create = function(){
+    var width = 475,
+        height = 510,
+        active = d3.select(null);
 
-  var radius = d3.scale.sqrt()
-    .domain([0, 1e6])
-    .range([0, 15]);
+    var projection = d3.geo.albersUsa()
+        .scale(1000)
+        .translate([width / 2, height / 2]);
 
-  var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    var path = d3.geo.path()
+        .projection(projection);
 
-  var legend = svg.append("g")
-    .attr("class", "legend")
-    .attr("transform", "translate(" + (width - 50) + "," + (height - 20) + ")")
-    .selectAll("g")
-    .data([1e6, 5e6, 1e7])
-    .enter().append("g");
+    var svg = d3.select("#side-view").append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-  legend.append("circle")
-    .attr("cy", function(d) {
-      return -radius(d);
-    })
-    .attr("r", radius);
+    svg.append("rect")
+        .attr("class", "background")
+        .attr("width", width)
+        .attr("height", height)
+        .on("click", reset);
 
-  legend.append("text")
-    .attr("y", function(d) {
-      return -2 * radius(d);
-    })
-    .attr("dy", "1.3em")
-    .text(d3.format(".1s"));
+    var g = svg.append("g")
+        .style("stroke-width", "1.5px")
+        .attr("transform", "translate(100,100)scale(0.6, 0.6)");
 
-  d3.json("/javascripts/us.json", function(error, us) {
-    if (error) return console.error(error);
+    d3.json("/javascripts/us.json", function(error, us) {
+      g.selectAll("path")
+          .data(topojson.feature(us, us.objects.states).features)
+        .enter().append("path")
+          .attr("d", path)
+          .attr("class", "feature")
+          .on("click", clicked);
 
-    svg.append("path")
-      .datum(topojson.feature(us, us.objects.nation))
-      .attr("class", "land")
-      .attr("d", path);
+      g.append("path")
+          .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+          .attr("class", "mesh")
+          .attr("d", path);
+    });
 
-    svg.append("path")
-      .datum(topojson.mesh(us, us.objects.states, function(a, b) {
-        return a !== b;
-      }))
-      .attr("class", "border border--state")
-      .attr("d", path);
+    function clicked(d) {
+      if (active.node() === this) return reset();
+      active.classed("active", false);
+      active = d3.select(this).classed("active", true);
 
-    svg.append("g")
-      .attr("class", "bubble")
-      .selectAll("circle")
-      .data(topojson.feature(us, us.objects.counties).features
-        .sort(function(a, b) {
-          return b.properties.population - a.properties.population;
-        }))
-      .enter().append("circle")
-      .attr("transform", function(d) {
-        return "translate(" + path.centroid(d) + ")";
-      })
-      .attr("r", function(d) {
-        return radius(d.properties.population);
-      })
-      .append("title")
-      .text(function(d) {
-        return d.properties.name + "\nPopulation " + formatNumber(d.properties.population);
-      });
-  });
+      var bounds = path.bounds(d),
+          dx = bounds[1][0] - bounds[0][0],
+          dy = bounds[1][1] - bounds[0][1],
+          x = (bounds[0][0] + bounds[1][0]) / 2,
+          y = (bounds[0][1] + bounds[1][1]) / 2,
+          scale = .9 / Math.max(dx / width, dy / height),
+          translate = [width / 2 - scale * x, height / 2 - scale * y];
 
-  d3.select(self.frameElement).style("height", height + "px");
+      g.transition()
+          .duration(750)
+          .style("stroke-width", 1.5 / scale + "px")
+          .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+    }
+
+    function reset() {
+      active.classed("active", false);
+      active = d3.select(null);
+
+      g.transition()
+          .duration(750)
+          .style("stroke-width", "1.5px")
+          .attr("transform", "translate(100,100)scale(0.6, 0.6)");
+    }
+
+  };
+
+    mapView.update = function(){
+    
+   };
+
+  return mapView;
+
 })();

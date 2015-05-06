@@ -135,7 +135,6 @@ ul li a {
   display: inline-block;
   /*position: relative;*/
   /*right: 50px;*/
-  
   /*float: right;*/
   /*top: 10px;*/
   
@@ -179,6 +178,7 @@ ul li a {
   height: 500px;
   width: 475px;
   /*float: right;*/
+  
   margin-right: 53px;
   margin-top: 15px;
 }

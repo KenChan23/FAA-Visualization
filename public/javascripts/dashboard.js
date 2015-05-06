@@ -1,4 +1,19 @@
-(function() {
+var barChartModule = barChartModule || {};
+var mapViewModule = mapViewModule || {};
+
+(function(global) {
+  // "use strict";
+
+  barChartModule.create();
+
+  // var ssc = global.ssc;   
+  //   if (!ssc) {
+  //       ssc = {};
+  //       global.ssc = ssc;
+  //   }
+
+  // var barChartModule = ssc.barChartModule;
+  // var mapViewModule = ssc.mapViewModule;
 
   //  Initialize scale 
   var MAX_FATALITIES = 37;
@@ -670,5 +685,19 @@
 
   });
 
-
-})();
+  d3.selectAll('#bargraph-view, #mapview-view').on('click', function() {
+    console.log("Inside");
+    if ($('#bargraph-view').is(':checked'))
+    {
+      console.log("Bargraph");
+      d3.select("#side-view").select("svg").remove();
+      barChartModule.create();
+    }
+    if ($('#mapview-view').is(':checked'))
+    {
+      console.log("Mapview");
+      d3.select("#side-view").select("svg").remove();
+      mapViewModule.create();
+    }
+  });
+})(this);
