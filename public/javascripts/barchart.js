@@ -363,7 +363,10 @@ var barChartModule = (function(){
                     .attr('name', 'accident_type')
                     .attr('value', function(d){return d;})
                     // .attr('right', '25px')
-                    .style('left', '515px')
+                    // .style('left', '515px')
+                      .style('left', '7px')
+                    .style('margin-top', '6px')
+                    // .style('font-weight', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? "bold" : "normal";})
                     .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
                     .on('click', checkboxChecked);
 

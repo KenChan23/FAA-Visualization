@@ -226,35 +226,6 @@ ul li a {
   left: 15px;
 }
 
-.ui-rangeSlider-container {
-  width: 685px;
-}
-
-.ui-range-innerBar {
-  width: 685px;
-}
-
-.ui-rangeSlider-bar {
-  background: #A00F00;
-  width: 685px;
-}
-
-.ui-rangeSlider-handle.ui-rangeSlider-rightHandle {
-  left: 685px;
-}
-
-.ui-rangeSlider-arrow {
-  width: 23px;
-}
-
-.ui-rangeSlider-rightArrow .ui-rangeSlider-arrow-inner {
-  margin-right: -5px;
-}
-
-.ui-rangeSlider-leftArrow .ui-rangeSlider-arrow-inner {
-  margin-left: -5px;
-}
-
 .cd-panel-content {
   margin: 10px;
   font-size: 20px;
@@ -349,6 +320,11 @@ ul li a {
 
 
 **/
+
+#dropdown3.dropdown-content li>a, .dropdown-content li>span {
+  font-size: 10px !important;
+  padding: 1rem 1.5rem !important;
+}
 
 .axis,
 .frame {
