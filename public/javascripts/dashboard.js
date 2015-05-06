@@ -23,7 +23,7 @@
 
   var fatality_color = d3.scale.quantile()
     .domain([1, MAX_FATALITIES])
-    .range(d3.range(1, 9).map(function(d) {
+    .range(d3.range(1, 8).map(function(d) {
       return "q-color" + d + "-10";
     }));
 
@@ -32,7 +32,7 @@
 
   var accident_color = d3.scale.quantile()
     .domain([1, MAX_ACCIDENTS])
-    .range(d3.range(1, 9).map(function(d) {
+    .range(d3.range(1, 8).map(function(d) {
       return "q-color" + d + "-10";
     }));
 
@@ -170,7 +170,7 @@
         accident_object.date = parseDate(d[0].date);
         accident_object.count = d.length;
         accident_data_array.push(accident_object);
-        console.log(accident_object);
+        // console.log(accident_object);
         return accident_object.count;
       }).map(csv);
 
@@ -536,12 +536,15 @@
         var currentDate = Date.parse(d);
 
         if (minimumDate <= currentDate && currentDate <= maximumDate) {
-          return d3.select(this).classed('q-invisible', false);
+          // return d3.select(this).classed('q-invisible', false);
+          return d3.select(this).style('opacity', 1);
         } else
-          return d3.select(this).classed('q-invisible', true);
+          // return d3.select(this).classed('q-invisible', true);
+          return d3.select(this).style('opacity', 0.1);
       });
     } else {
-      d3.selectAll('.day').classed('q-invisible', false);
+      // d3.selectAll('.day').classed('q-invisible', false);
+      return d3.selectAll('.day').style('opacity', 1);
     }
 
   }

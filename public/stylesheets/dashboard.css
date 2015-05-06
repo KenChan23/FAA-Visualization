@@ -10,6 +10,7 @@ form p {
 #primary-head {
   /*width: 750px;*/
   
+  padding-left: 25px;
   display: block;
 }
 
@@ -94,6 +95,10 @@ input[type="radio"]:not(:checked)+label,
   font-size: 0.75rem !important;
 }
 
+#dropdown-family {
+  display: inline-block;
+}
+
 #dropdown1-group {
   display: inline-block;
   margin: 0px 5px;
@@ -125,26 +130,41 @@ ul li a {
 }
 
 .barchart-filters {
-  margin-top: 5px;
+  /*margin-top: 5px;*/
+  
   display: inline-block;
-  position: relative;
-  right: 50px;
+  /*position: relative;*/
+  /*right: 50px;*/
+  
   float: right;
-  top: 10px;
+  /*top: 10px;*/
+  
+  margin-right: 45px;
 }
 
 .barchart-filters div {
+  top: 13px;
   display: inline-block;
+  position: relative;
 }
 
 .heatmap-filters {
   /*margin-top: 5px;*/
   
+  top: 13px;
   display: inline-block;
   position: relative;
-  /*right: 50px;
-  float: right;
-  top: 10px;*/
+  margin-left: 25px;
+  /*right: 50px;*/
+  /*float: right;*/
+  /*top: 10px;*/
+}
+
+.select-view-filters {
+  top: 13px;
+  display: inline-block;
+  position: relative;
+  margin-left: 25px;
 }
 
 #heatmap-panel {
@@ -160,6 +180,7 @@ ul li a {
   width: 475px;
   float: right;
   margin-right: 53px;
+  margin-top: 15px;
 }
 
 .btn,
@@ -255,50 +276,67 @@ ul li a {
   stroke: #000;
   stroke-width: 2px;
 }
+/*.RdYlGn .q-color0-10 {
+  fill: #FFFFFF;
+}*/
 
 .RdYlGn .q-color0-10 {
-  fill: #FFFFFF;
+  /*fill: #FFFFCC;*/
+  
+  fill: #FFF5F0;
 }
 
 .RdYlGn .q-color1-10 {
-  fill: #FFFFCC;
-}
-
-.RdYlGn .q-color2-10 {
-  fill: #FFEDA0;
+  /*fill: #FFEDA0;*/
+  
+  fill: #FEE0D2;
 }
 /**/
 
-.RdYlGn .q-color3-10 {
-  fill: #FED976;
+.RdYlGn .q-color2-10 {
+  /*fill: #FED976;*/
+  
+  fill: #FCBBA1;
 }
 
+.RdYlGn .q-color3-10 {
+  /*fill: #FEB24C;*/
+  
+  fill: #FC9272;
+}
+/**/
+
 .RdYlGn .q-color4-10 {
-  fill: #FEB24C;
+  /*fill: #FD8D3C;*/
+  
+  fill: #FB6A4A;
 }
 /**/
 
 .RdYlGn .q-color5-10 {
-  fill: #FD8D3C;
+  /*fill: #FC4E2A;*/
+  
+  fill: #EF3B2C;
+}
+
+.RdYlGn .q-color6-10 {
+  /*fill: #E31A1C;*/
+  
+  fill: #CB181D;
 }
 /**/
 
-.RdYlGn .q-color6-10 {
-  fill: #FC4E2A;
-}
-
 .RdYlGn .q-color7-10 {
-  fill: #E31A1C;
+  /*fill: #BD0026;*/
+  
+  fill: #A50F15;
 }
 /**/
 
 .RdYlGn .q-color8-10 {
-  fill: #BD0026;
-}
-/**/
-
-.RdYlGn .q-color9-10 {
-  fill: #800026;
+  /*fill: #800026;*/
+  
+  fill: #67000D;
 }
 /**/
 /**/

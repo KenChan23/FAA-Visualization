@@ -8,7 +8,7 @@
 
   var margin = {top: 5, right: 5, bottom: 30, left: 40},
       width = 475 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      height = 510 - margin.top - margin.bottom;
 
   var x0 = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);
@@ -19,7 +19,8 @@
       .range([height, 0]);
 
   var color = d3.scale.ordinal()
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c"]);
+      // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c"]);
 
   var xAxis = d3.svg.axis()
       .scale(x0)
@@ -209,7 +210,7 @@
         return obj;
       });
 
-      console.log(category_data);
+      // console.log(category_data);
 
     function commonKeys(obj1, obj2, obj3, obj4, obj5, obj6) {
       var keys = [];
@@ -237,11 +238,11 @@
       return obj;
     });
 
-    console.log(category_data);
-    console.log(formattedCategoryData);
-    console.log(commonKeyValues);
-    console.log(barChartData);
-    console.log(aggregate_data);
+    // console.log(category_data);
+    // console.log(formattedCategoryData);
+    // console.log(commonKeyValues);
+    // console.log(barChartData);
+    // console.log(aggregate_data);
 
     selectedCategories = commonKeyValues.filter(function(key, i) { return i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5; });
 
@@ -263,7 +264,7 @@
         .append("text")
         .attr("y", 24)
         .attr("dy", ".71em")
-        .attr("x", width / 2)
+        .attr("x", width / 2 + 50)
         .style("text-anchor", "end")
         .style("z-index", 999)
         .text(xAxisTitle);;
@@ -274,7 +275,8 @@
       .append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
-        .attr("dy", ".71em")
+        // .attr("dy", ".71em")
+        .attr("dy", ".01em")
         .style("text-anchor", "end")
         .style("z-index", 999)
         .text("Frequency");
