@@ -40,6 +40,7 @@ form p {
   height: 50px;
   width: 50px;
   z-index: 9999;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .mdi-navigation-arrow-back {
@@ -64,9 +65,10 @@ form p {
 
 .cd-panel-container {
   /*...*/
-  
+  overflow-y: scroll;
   color: white;
-  background-color: #A00F00;
+  /*background-color: #A00F00;*/
+  background-color: white;
   height: 100%;
   position: fixed;
   width: 42%;
@@ -77,6 +79,7 @@ form p {
   transition-duration: 0.3s;
   transition-delay: 0.3s;
   transform: translate3d(100%, 0, 0);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .is-visible .cd-panel-container {
@@ -367,4 +370,24 @@ circle.hidden {
   stroke: #fff;
   fill-opacity: .125;
   shape-rendering: crispEdges;
+}
+
+.node rect {
+  cursor: pointer;
+  fill: #fff;
+  fill-opacity: .5;
+  stroke: #3182bd;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+path.link {
+  shape-rendering: crispEdges;
+  fill: none;
+  stroke: #9ecae1;
+  stroke-width: 1.5px;
 }

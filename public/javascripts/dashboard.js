@@ -1,5 +1,6 @@
 var barChartModule = barChartModule || {};
 var mapViewModule = mapViewModule || {};
+var collapsibleTreeModule = collapsibleTreeModule || {};
 
 (function(global) {
   // "use strict";
@@ -262,6 +263,8 @@ var mapViewModule = mapViewModule || {};
     //  Must translate text to make more readable
     d3.selectAll('g.context g.tick text').attr('transform', 'translate(9,0)');
 
+    collapsibleTreeModule.create(csv);
+
   });
 
   function monthPath(t0) {
@@ -391,11 +394,13 @@ var mapViewModule = mapViewModule || {};
   d3.selectAll('.day').on('click', function(d) {
 
     s = JSON.stringify(data_lookup[d]);
-    console.log(data_lookup[d]);
-    d3.select('.cd-panel-content').html(s);
+    // console.log(data_lookup[d]);
+    // d3.select('.cd-panel-content').html(s);
     // ko.applyBindings({
     //   incidents: data_lookup[d]
     // });
+    d3.select('.cd-panel-content svg').remove();
+    collapsibleTreeModule.create(data_lookup[d]);
   });
 
   // $("#slider").bind("valuesChanging", function(e, data){
@@ -506,6 +511,28 @@ var mapViewModule = mapViewModule || {};
   //    - Friday: y = 65
   //    - Saturday: y = 78
 
+  $(document).mouseup(function (e)
+    {
+      var container = $("#dropdown1");
+
+      if (!container.is(e.target) // if the target of the click isn't the container...
+          && container.has(e.target).length === 0) // ... nor a descendant of the container
+      {
+          container.hide();
+      }
+    });
+
+  $(document).mouseup(function (e)
+    {
+      var container = $("#dropdown2");
+
+      if (!container.is(e.target) // if the target of the click isn't the container...
+          && container.has(e.target).length === 0) // ... nor a descendant of the container
+      {
+          container.hide();
+      }
+    });
+
   $('ul#dropdown1 li').click(function() {
 
     switch ($(this).text()) {
@@ -590,7 +617,6 @@ var mapViewModule = mapViewModule || {};
       minimumDate = brush.extent()[0];
       maximumDate = brush.extent()[1];
 
-
       d3.selectAll('.day').filter(function(d) {
 
         var currentDate = Date.parse(d);
@@ -602,6 +628,7 @@ var mapViewModule = mapViewModule || {};
           // return d3.select(this).classed('q-invisible', true);
           return d3.select(this).style('opacity', 0.1);
       });
+
     } else {
       // d3.selectAll('.day').classed('q-invisible', false);
       return d3.selectAll('.day').style('opacity', 1);
