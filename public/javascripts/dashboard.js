@@ -25,6 +25,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
   var fatality_data;
   var fatality_data_array = [];
   var accident_data_array = [];
+  var csv_data;
 
   var width = 750,
     height = 100,
@@ -90,7 +91,9 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
 
   var brush = d3.svg.brush()
     .x(x2)
-    .on("brush", brushed);
+    .on("brushstart", brushedstart)
+    .on("brush", brushed)
+    .on("brushend", brushedend);
 
   // Establish the context for selecting a particular timeline of data
   var context = d3.select("#context-slider").append("svg").style("width", 1280).style("height", 70).style("margin-left", 30)
@@ -129,14 +132,16 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
 
   d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv) {
 
-    csv.forEach(function(d) {
+    csv_data = csv;
+
+    csv_data.forEach(function(d) {
       if (d.date in data_lookup)
         data_lookup[d.date].push(d);
       else
         data_lookup[d.date] = [];
     });
 
-    csv.sort(sortByDateAscending);
+    csv_data.sort(sortByDateAscending);
 
     function sortByDateAscending(a, b) {
       // Dates will be cast to numbers automagically:
@@ -171,7 +176,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
         // console.log(fatality_object);
 
         return fatality_sum;
-      }).map(csv);
+      }).map(csv_data);
 
     accident_data = d3.nest()
       .key(function(d) {
@@ -188,7 +193,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
         accident_data_array.push(accident_object);
         // console.log(accident_object);
         return accident_object.count;
-      }).map(csv);
+      }).map(csv_data);
 
       //  Just checking the distribution of weather
       weather_data = d3.nest()
@@ -206,7 +211,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
         // accident_data_array.push(accident_object);
         // console.log(accident_object);
         return d.length;
-      }).map(csv);
+      }).map(csv_data);
 
     console.log(weather_data);
 
@@ -214,7 +219,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
       return d.primary_cause;
     }).rollup(function(d) {
       return d.length;
-    }).map(csv);
+    }).map(csv_data);
 
     x.domain(d3.extent(fatality_data_array.map(function(d) {
       return d.date;
@@ -263,7 +268,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
     //  Must translate text to make more readable
     d3.selectAll('g.context g.tick text').attr('transform', 'translate(9,0)');
 
-    collapsibleTreeModule.create(csv);
+    collapsibleTreeModule.create(csv_data);
 
   });
 
@@ -609,13 +614,26 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
 
   });
 
+function brushedstart() {
+    d3.select('.cd-panel-content svg').remove();
+    d3.select('#side-view').select('svg').remove();
+    d3.select('#side-view').insert('div', ':first-child').classed('preloader-wrapper', true).classed('big', true).classed('active', true)
+                                .style('position', 'relative').style('left', '45%').style('margin-top','180px')
+                                .append('div').classed('spinner-layer', true).classed('spinner-blue-only', true)
+                                .style('border-color', '#A00F00')
+                                .append('div').classed('circle-clipper', true).classed('left', true)
+                                .append('div').classed('circle', true).style('border-width', '10px');
+  }
+
   function brushed() {
     // focus.select(".area").attr("d", area);
     // focus.select(".x.axis").call(xAxis);
+      
 
     if (!brush.empty()) {
       minimumDate = brush.extent()[0];
       maximumDate = brush.extent()[1];
+
 
       d3.selectAll('.day').filter(function(d) {
 
@@ -635,6 +653,28 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
     }
 
   }
+
+  function brushedend() {
+    d3.select('#side-view div.preloader-wrapper.active').remove();
+    if(!brush.empty()) {
+      minimumDate = brush.extent()[0];
+      maximumDate = brush.extent()[1];
+      barChartModule.create(minimumDate, maximumDate);
+      collapsibleTreeModule.create(csv_data.filter(function(d){
+        var currentDate = Date.parse(d.date);
+
+          if (minimumDate <= currentDate && currentDate <= maximumDate) {
+            return d;
+          }
+      }));
+      
+    }
+    else{
+      barChartModule.create();
+    }
+  }
+
+  
 
   //  Need to implement a cumulative number...
   $('ul#dropdown2 li').click(function() {

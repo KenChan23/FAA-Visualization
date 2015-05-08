@@ -3,8 +3,7 @@ var barChartModule = (function(){
 
   var barChart = {};
 
-  barChart.create = function(){
-    var category_data;
+  var category_data;
     var formattedCategoryData;
     var selectedCategories;
     var aggregate_data = {};
@@ -37,16 +36,26 @@ var barChartModule = (function(){
         .orient("left")
         .tickFormat(d3.format(".2s"));
 
+    var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+  })
+
     var svg;
+    var data;
+
+  barChart.create = function(minimum_date, maximum_date){
 
     function hoverBar(d) {
       // console.log(d);
-      var s = "<p>" + d.category + "</p>";
+      // var s = "<p>" + d.category + "</p>";
 
-      var hoveredBar = d3.select(this);
+      // var hoveredBar = d3.select(this);
       d3.selectAll('.g rect').filter(function(e){return e !== d}).style('opacity', 0.3);
       
-      d3.select('#hello').html(s);
+      // d3.select('#hello').html(s);
     }
 
     function hoverOff() {
@@ -59,19 +68,21 @@ var barChartModule = (function(){
       function updateChart(selectedCategories){
 
         barChartData.forEach(function(d){
-            d.categories = selectedCategories.map(function(category) {return {category: category, value: +d[category]}; });
+            d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
           });
 
         // console.log("BarChartData inside update chart: " + barChartData);
 
           x0.domain(binXAxis.concat("0 - 199").concat("200 - 399").concat("400 - 599").concat("600 - 799").concat("800 - 999").concat("1000+"));
           x1.domain(selectedCategories).rangeRoundBands([0, x0.rangeBand()]);
-          y.domain([0, d3.max(barChartData, function(d) { return d3.max(d.categories, function(d) { return d.value; }); })]);
+          y.domain([0, d3.max(barChartData, function(d) { return d3.max(d.categories, function(d) { return d.frequency; }); })]);
 
         svg.selectAll('.x.axis').transition()
         .duration(800).call(xAxis)
         svg.selectAll('.y.axis').transition()
         .duration(800).call(yAxis)
+
+        // console.log(barChartData);
 
         //  Update...
     var bin = svg.selectAll(".g")
@@ -80,8 +91,8 @@ var barChartModule = (function(){
         .data(function(d) {return d.categories; })
         .attr("width", x1.rangeBand())
         .attr("x", function(d) { return x1(d.category); })
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
+        .attr("y", function(d) { return y(d.frequency); })
+        .attr("height", function(d) { return height - y(d.frequency); })
         .style("fill", function(d) { return color(d.category); });
 
     //  Enter new elements...
@@ -90,10 +101,13 @@ var barChartModule = (function(){
       bin.enter().append('rect')
         .attr("width", x1.rangeBand())
         .attr("x", function(d) { return x1(d.category); })
-        .attr("y", function(d) { return y(d.value); })
+        .attr("y", function(d) { return y(d.frequency); })
         // .transition().duration(800)
-        .attr("height", function(d) { return height - y(d.value); })
-        .style("fill", function(d) { return color(d.category); }).on('mouseover', hoverBar).on('mouseout', hoverOff);
+        .attr("height", function(d) { return height - y(d.frequency); })
+        .style("fill", function(d) { return color(d.category); })
+        .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
+        // .on('mouseover', hoverBar).on('mouseout', hoverOff);
         // .on('mouseover', function(d) { this.attr('fill', 'red');});
 
           bin.exit().remove();
@@ -188,7 +202,21 @@ var barChartModule = (function(){
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        svg.call(tip);
+
     d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv){
+
+      data = csv;
+
+      if(minimum_date != undefined && maximum_date != undefined){
+        data = data.filter(function(d){
+            var currentDate = Date.parse(d.date);
+
+              if (minimumDate <= currentDate && currentDate <= maximumDate) {
+                return d;
+              }
+          });
+      }
 
        category_data = d3.nest().key(function(d){
           return 0 <= d[totalHoursParameter] && d[totalHoursParameter] < 200 ?
@@ -202,7 +230,7 @@ var barChartModule = (function(){
       .sortKeys(d3.ascending)
       .rollup(function(leaves){ 
           return leaves.length;
-        }).entries(csv);
+        }).entries(data);
 
         formattedCategoryData = category_data.map(function(d){
           var obj = {};
@@ -216,6 +244,7 @@ var barChartModule = (function(){
           return obj;
         });
 
+        // console.log("Category Data");
         // console.log(category_data);
 
       function commonKeys(obj1, obj2, obj3, obj4, obj5, obj6) {
@@ -231,6 +260,9 @@ var barChartModule = (function(){
 
       var commonKeyValues = commonKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
 
+      // console.log("Common Key Values");
+      // console.log(commonKeyValues);
+
       barChartData = formattedCategoryData.map(function(d){
         var obj = {};
 
@@ -244,6 +276,9 @@ var barChartModule = (function(){
         return obj;
       });
 
+      // console.log("Bar Chart Data");
+      // console.log(barChartData);
+
       // console.log(category_data);
       // console.log(formattedCategoryData);
       // console.log(commonKeyValues);
@@ -252,16 +287,23 @@ var barChartModule = (function(){
 
       selectedCategories = commonKeyValues.filter(function(key, i) { return i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5; });
 
+      var selected_obj  = {};
+      for(var i = 0, l = selectedCategories.length; i < l; i++) {
+          selected_obj[selectedCategories[i]] = true;
+      }
+
+      // console.log("Selected!!!");
       // console.log(selectedCategories);
+      // console.log("........");
 
       barChartData.forEach(function(d){
-        d.categories = selectedCategories.map(function(category) {return {category: category, value: +d[category]}; });
+        d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
       });
 
       // x0.domain(barChartData.map(function(d) {console.log('bin: ' + d.bin); return d.bin; }));
       x0.domain(binXAxis.concat("0 - 199").concat("200 - 399").concat("400 - 599").concat("600 - 799").concat("800 - 999").concat("1000+"));
       x1.domain(selectedCategories).rangeRoundBands([0, x0.rangeBand()]);
-      y.domain([0, d3.max(barChartData, function(d) { return d3.max(d.categories, function(d) { return d.value; }); })]);
+      y.domain([0, d3.max(barChartData, function(d) { return d3.max(d.categories, function(d) { return d.frequency; }); })]);
 
       svg.append("g")
           .attr("class", "x axis")
@@ -298,12 +340,14 @@ var barChartModule = (function(){
         .enter().append("rect")
           .attr("width", x1.rangeBand())
           .attr("x", function(d) { return x1(d.category); })
-          .attr("y", function(d) { return y(d.value); })
+          .attr("y", function(d) { return y(d.frequency); })
           // .transition().duration(800)
-          .attr("height", function(d) { return height - y(d.value); })
+          .attr("height", function(d) { return height - y(d.frequency); })
           .style("fill", function(d) { return color(d.category); })
-          .on('mouseover', hoverBar)
-          .on('mouseout', hoverOff);
+          // .on('mouseover', hoverBar)
+          // .on('mouseout', hoverOff);
+          .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
           // .on('mouseover', function(d) { this.attr('fill', 'red');});
 
       var legend = svg.append("g").attr("class", "legend-group").selectAll(".legend")
@@ -361,14 +405,17 @@ var barChartModule = (function(){
         inputs_sub_b.append('input')
                     .attr('type', 'checkbox')
                     .attr('name', 'accident_type')
-                    .attr('value', function(d){return d;})
+                    .attr('value', function(d){ return d;})
                     // .attr('right', '25px')
                     // .style('left', '515px')
                       .style('left', '7px')
                     .style('margin-top', '6px')
                     // .style('font-weight', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? "bold" : "normal";})
-                    .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
+                    //console.log(d + ": " + (d in selected_obj));
                     .on('click', checkboxChecked);
+
+        d3.selectAll('#dropdown3 li input').property('checked', function(d, i){ return (d in selected_obj) ? true : false;})
+
 
             inputs.exit().remove();
 
@@ -402,10 +449,6 @@ var barChartModule = (function(){
           container.hide();
       }
     });
-  };
-
-  barChart.update = function(){
-
   };
 
   return barChart;
