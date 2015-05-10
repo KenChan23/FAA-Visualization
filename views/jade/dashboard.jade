@@ -117,14 +117,11 @@ html(lang='en')
     div.cd-panel.from-right
         div.cd-panel-container
           div.cd-panel-content
-            div(data-bind="foreach: incidents")
-              p(data-bind="text: date")
-              p(data-bind="text: city + ', ' state")
+            div#remarks-box       
     div#heatmap-panel
     div#side-view
     //- div#slider
     div#context-slider
-    div#matrix-scatterplot-panel
     //- script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
     
     script.

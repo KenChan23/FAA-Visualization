@@ -420,3 +420,8 @@ path.link {
   top: 100%;
   left: 0;
 }
+
+#remarks-box  {
+  color: black;
+  font-size: 16px;
+}
