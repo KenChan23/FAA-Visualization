@@ -3,7 +3,7 @@ var mapViewModule = (function(){
 
   var mapView = {};
 
-  mapView.create = function(){
+  mapView.create = function(data){
     var width = 475,
         height = 510,
         active = d3.select(null);
@@ -29,12 +29,23 @@ var mapViewModule = (function(){
         .style("stroke-width", "1.5px")
         .attr("transform", "translate(100,100)scale(0.6, 0.6)");
 
-    d3.json("/javascripts/us.json", function(error, us) {
+    d3.json("/javascripts/us-named.json", function(error, us) {
+      // aggregate_color = d3.nest
+
+      console.log("states");
+
+        var features = topojson.feature(us, us.objects.states).features;
+        top.location.hash.split("").slice(1, features.length).forEach(function(c, i) {
+          if ((c = +c) >= 0 && c < 10) assign(features[i], c ? c - 1 : null);
+        });
+
+        console.log(us);
+
       g.selectAll("path")
           .data(topojson.feature(us, us.objects.states).features)
         .enter().append("path")
           .attr("d", path)
-          .attr("class", "feature")
+          .attr("class", function(d){console.log(d); return "feature"})
           .on("click", clicked);
 
       g.append("path")

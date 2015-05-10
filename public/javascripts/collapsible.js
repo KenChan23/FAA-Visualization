@@ -21,7 +21,32 @@ var collapsibleTreeModule = (function(){
         for(var property in d.values[i])
          {
           if(property !== "name")
-            flare_obj.children[index].children[i].children.push({name: property + ": " + d.values[i][property], class: "child"})
+          {
+            switch(property)
+            {
+              case 'date':
+                property = 'Date'
+                break;
+              case 'state':
+                property = 'State'
+                break;
+              case 'city':
+                property = 'City';
+                break;
+              case 'light':
+                property = 'Light Condition';
+                break;
+              case 'city':
+                property = 'City';
+                break;
+              case 'city':
+                property = 'City';
+                break;
+            }
+
+            // console.log(property);
+            flare_obj.children[index].children[i].children.push({name: property + ": " + d.values[i][property], class: "child"});
+          }
          } 
          } });
 

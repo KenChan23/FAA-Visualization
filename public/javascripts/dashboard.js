@@ -2,6 +2,8 @@ var barChartModule = barChartModule || {};
 var mapViewModule = mapViewModule || {};
 var collapsibleTreeModule = collapsibleTreeModule || {};
 
+data_range = data_range.split(',');
+
 (function(global) {
   // "use strict";
 
@@ -55,7 +57,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
 
   //  append heatmap
   var svg = d3.select("#heatmap-panel").selectAll("svg")
-    .data(d3.range(1980, 1985))
+    .data(d3.range(parseInt(data_range[0]), parseInt(data_range[1]) + 1))
     .enter().append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -130,7 +132,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
     .attr("class", "month")
     .attr("d", monthPath);
 
-  d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv) {
+  d3.csv(csv_path, function(error, csv) {
 
     csv_data = csv;
 
@@ -437,7 +439,7 @@ var collapsibleTreeModule = collapsibleTreeModule || {};
     {
       console.log("Mapview");
       d3.select("#side-view").select("svg").remove();
-      mapViewModule.create();
+      mapViewModule.create(csv_data);
     }
   });
 

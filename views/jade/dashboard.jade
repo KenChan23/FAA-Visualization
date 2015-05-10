@@ -126,8 +126,11 @@ html(lang='en')
     div#context-slider
     div#matrix-scatterplot-panel
     //- script(type='text/javascript', src='/javascripts/minified/customslider.min.js')
+    
+    script.
+      csv_path = "#{csv_path}"
+      data_range = "#{years}"
     script(type='text/javascript', src='/javascripts/minified/sidebutton.min.js')
-
     //- script(type='text/javascript', src='/javascripts/minified/dashboard.min.js')
     script(type='text/javascript', src='/javascripts/barchart.js')
     script(type='text/javascript', src='/javascripts/map.js')

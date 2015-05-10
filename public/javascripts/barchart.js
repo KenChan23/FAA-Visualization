@@ -204,7 +204,7 @@ var barChartModule = (function(){
 
         svg.call(tip);
 
-    d3.csv("../data/part_91_csv/data_1980_84.csv", function(error, csv){
+    d3.csv(csv_path, function(error, csv){
 
       data = csv;
 
