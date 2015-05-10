@@ -215,7 +215,7 @@ data_range = data_range.split(',');
         return d.length;
       }).map(csv_data);
 
-    console.log(weather_data);
+    // console.log(weather_data);
 
     category_data = d3.nest().key(function(d) {
       return d.primary_cause;
@@ -341,6 +341,7 @@ data_range = data_range.split(',');
 
     d3.selectAll('#accidents, #fatalities').on('click', function() {
       if ($('#accidents').is(':checked'))
+      {
         rectVisibility('#accidents', function(data, color) {
           renderRectangle(data, color, "#accidents");
 
@@ -365,7 +366,14 @@ data_range = data_range.split(',');
             // .call(xAxis2);
 
         });
+        if(d3.select("#side-view").select("svg").attr("class") == "fatalities-mapview")
+        {
+          d3.select("#side-view").select("svg").remove();
+          mapViewModule.create(csv_data, "accidents");
+        }
+      }
       if ($('#fatalities').is(':checked'))
+      {
         rectVisibility('#fatalities', function(data, color) {
           renderRectangle(data, color, "#fatalities");
 
@@ -390,6 +398,12 @@ data_range = data_range.split(',');
           //   .call(xAxis2);
 
         });
+        if(d3.select("#side-view").select("svg").attr("class") == "accidents-mapview")
+        {
+          d3.select("#side-view").select("svg").remove();
+          mapViewModule.create(csv_data, "fatalities");
+        }
+      }
     });
 
   };
@@ -430,16 +444,19 @@ data_range = data_range.split(',');
     console.log("Inside");
     if ($('#bargraph-view').is(':checked'))
     {
-      console.log("Bargraph");
+      // console.log("Bargraph");
       d3.select("#side-view").select("svg").remove();
       d3.selectAll("#dropdown3 li").remove();
       barChartModule.create();
     }
     if ($('#mapview-view').is(':checked'))
     {
-      console.log("Mapview");
+      // console.log("Mapview");
       d3.select("#side-view").select("svg").remove();
-      mapViewModule.create(csv_data);
+      if($('#fatalities').is(':checked'))
+        mapViewModule.create(csv_data, "fatalities");
+      if($('#accidents').is(':checked'))
+        mapViewModule.create(csv_data, "accidents");
     }
   });
 
@@ -618,7 +635,7 @@ data_range = data_range.split(',');
 
 function brushedstart() {
     d3.select('.cd-panel-content svg').remove();
-    d3.select('#side-view').select('svg').remove();
+    d3.select("#side-view").select("svg").remove();
     d3.select('#side-view').insert('div', ':first-child').classed('preloader-wrapper', true).classed('big', true).classed('active', true)
                                 .style('position', 'relative').style('left', '45%').style('margin-top','180px')
                                 .append('div').classed('spinner-layer', true).classed('spinner-blue-only', true)
@@ -651,6 +668,7 @@ function brushedstart() {
 
     } else {
       // d3.selectAll('.day').classed('q-invisible', false);
+      // brushedend();
       return d3.selectAll('.day').style('opacity', 1);
     }
 
@@ -661,7 +679,15 @@ function brushedstart() {
     if(!brush.empty()) {
       minimumDate = brush.extent()[0];
       maximumDate = brush.extent()[1];
-      barChartModule.create(minimumDate, maximumDate);
+      if ($('#bargraph-view').is(':checked'))
+        barChartModule.create(minimumDate, maximumDate);
+      if ($('#mapview-view').is(':checked'))
+      {
+        if($('#accidents').is(':checked'))
+          mapViewModule.create(csv_data, "accidents", minimumDate, maximumDate)
+        if($('#fatalities').is(':checked'))
+          mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate)
+      }
       collapsibleTreeModule.create(csv_data.filter(function(d){
         var currentDate = Date.parse(d.date);
 
@@ -672,7 +698,15 @@ function brushedstart() {
       
     }
     else{
-      barChartModule.create();
+      if($('#bargraph-view').is(':checked'))
+        barChartModule.create();
+      else
+      {
+        if($('#accidents').is(':checked'))
+          mapViewModule.create(csv_data, "accidents");
+        if($('#fatalities').is(':checked'))
+          mapViewModule.create(csv_data, "fatalities");
+      }
     }
   }
 

@@ -170,8 +170,8 @@ var collapsibleTreeModule = (function(){
       // });
 
       function update(source) {
-        console.log("Source");
-        console.log(root);
+        // console.log("Source");
+        // console.log(root);
         // Compute the flattened node list. TODO use d3.layout.hierarchy.
         var nodes = treeFlare.nodes(root);
 
@@ -286,10 +286,10 @@ var collapsibleTreeModule = (function(){
       }
 
       function color(d) {
-        return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+        return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#FEE0D2";
       }
 
-      console.log(remarks_hash);
+      // console.log(remarks_hash);
 
       function hoverRect(d) {
         if(d.name.indexOf("Remarks") >= 0)

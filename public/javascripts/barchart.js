@@ -212,7 +212,7 @@ var barChartModule = (function(){
         data = data.filter(function(d){
             var currentDate = Date.parse(d.date);
 
-              if (minimumDate <= currentDate && currentDate <= maximumDate) {
+              if (minimum_date <= currentDate && currentDate <= maximum_date) {
                 return d;
               }
           });
@@ -261,7 +261,7 @@ var barChartModule = (function(){
       var commonKeyValues = commonKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
 
       // console.log("Common Key Values");
-      // console.log(commonKeyValues);
+      // console.log(formattedCategoryData);
 
       barChartData = formattedCategoryData.map(function(d){
         var obj = {};
