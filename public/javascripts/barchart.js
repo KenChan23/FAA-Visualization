@@ -54,7 +54,7 @@ var barChartModule = (function(){
 
       // var hoveredBar = d3.select(this);
       d3.selectAll('.g rect').filter(function(e){return e !== d}).style('opacity', 0.3);
-      
+            console.log(d3.select(this));
       // d3.select('#hello').html(s);
     }
 
@@ -105,8 +105,11 @@ var barChartModule = (function(){
         // .transition().duration(800)
         .attr("height", function(d) { return height - y(d.frequency); })
         .style("fill", function(d) { return color(d.category); })
-        .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+        .on('mouseover', function(d){
+          tip.show(d);
+          hoverBar(d);
+        })
+      .on('mouseout', function(d){tip.hide(d); hoverOff(d);});
         // .on('mouseover', hoverBar).on('mouseout', hoverOff);
         // .on('mouseover', function(d) { this.attr('fill', 'red');});
 
@@ -346,8 +349,8 @@ var barChartModule = (function(){
           .style("fill", function(d) { return color(d.category); })
           // .on('mouseover', hoverBar)
           // .on('mouseout', hoverOff);
-          .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+          .on('mouseover', function(d){tip.show(d); hoverBar(d);})
+      .on('mouseout', function(d){tip.hide(d); hoverOff(d);});
           // .on('mouseover', function(d) { this.attr('fill', 'red');});
 
       var legend = svg.append("g").attr("class", "legend-group").selectAll(".legend")

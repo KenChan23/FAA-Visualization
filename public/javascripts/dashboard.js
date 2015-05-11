@@ -415,7 +415,7 @@ data_range = data_range.split(',');
   d3.selectAll('.day').on('click', function(d) {
     // d3.select("#side-view").select("svg").remove();
     // d3.selectAll("#dropdown3 li").remove();
-    console.log(d);
+    // console.log(d);
     // minimumDate = d;
     // maximumDate = d;
 
@@ -457,7 +457,7 @@ data_range = data_range.split(',');
   // });
 
   d3.selectAll('#bargraph-view, #mapview-view').on('click', function() {
-    console.log("Inside");
+    // console.log("Inside");
     if ($('#bargraph-view').is(':checked'))
     {
       // console.log("Bargraph");
@@ -583,7 +583,7 @@ data_range = data_range.split(',');
         d3.selectAll('rect.day').style('opacity', function(d) {
           // console.log(d3.select(this).attr('y'));
           if (d3.select(this).attr('y') == 0) {
-            console.log(d3.select(this)[0][0].__data__)
+            // console.log(d3.select(this)[0][0].__data__)
             return 1;
           } else {
             return 0.1;
