@@ -376,7 +376,9 @@ circle.hidden {
   cursor: pointer;
   fill: #fff;
   fill-opacity: .5;
-  stroke: #3182bd;
+  stroke: #5A5A5A;
+  /*stroke: #3182bd;*/
+    /*stroke: #A00F00;*/
   stroke-width: 1.5px;
 }
 
@@ -388,7 +390,8 @@ circle.hidden {
 path.link {
   shape-rendering: crispEdges;
   fill: none;
-  stroke: #9ecae1;
+  /*stroke: #9ecae1;*/
+  stroke: #B6ADA4;
   stroke-width: 1.5px;
 }
 

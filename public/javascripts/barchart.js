@@ -277,7 +277,7 @@ var barChartModule = (function(){
       });
 
       // console.log("Bar Chart Data");
-      // console.log(barChartData);
+      console.log(barChartData);
 
       // console.log(category_data);
       // console.log(formattedCategoryData);
@@ -415,7 +415,7 @@ var barChartModule = (function(){
                     .on('click', checkboxChecked);
 
         d3.selectAll('#dropdown3 li input').property('checked', function(d, i){ return (d in selected_obj) ? true : false;})
-
+        // console.log(selected_obj)
 
             inputs.exit().remove();
 

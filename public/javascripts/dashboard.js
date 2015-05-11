@@ -413,6 +413,22 @@ data_range = data_range.split(',');
   heatmapRadioActions();
 
   d3.selectAll('.day').on('click', function(d) {
+    // d3.select("#side-view").select("svg").remove();
+    // d3.selectAll("#dropdown3 li").remove();
+    console.log(d);
+    // minimumDate = d;
+    // maximumDate = d;
+
+    // if ($('#bargraph-view').is(':checked'))
+    //     barChartModule.create(minimumDate, maximumDate);
+    // if ($('#mapview-view').is(':checked'))
+    // {
+    //   if($('#accidents').is(':checked'))
+    //     mapViewModule.create(csv_data, "accidents", minimumDate, maximumDate)
+    //   if($('#fatalities').is(':checked'))
+    //     mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate)
+    // }
+
 
     s = JSON.stringify(data_lookup[d]);
     // console.log(data_lookup[d]);
@@ -567,6 +583,7 @@ data_range = data_range.split(',');
         d3.selectAll('rect.day').style('opacity', function(d) {
           // console.log(d3.select(this).attr('y'));
           if (d3.select(this).attr('y') == 0) {
+            console.log(d3.select(this)[0][0].__data__)
             return 1;
           } else {
             return 0.1;

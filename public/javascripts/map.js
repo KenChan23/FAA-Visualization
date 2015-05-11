@@ -94,6 +94,8 @@ var mapViewModule = (function(){
               }
           });
         }
+
+        console.log(csv);
         // console.log(us.objects.states.geometries);
 
         var state_accident_data = d3.nest().key(function(d){
@@ -132,7 +134,7 @@ var mapViewModule = (function(){
 
           fatality_color = d3.scale.threshold()
               .domain([0, max_fatality * 0.15, max_fatality * .30, max_fatality * .45, max_fatality * .65, max_fatality * .85]) // <-A
-              .range(["#ffffff", "#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
+              .range(["#ffffff", "#FEE0D2", "#FC9272", "#FB6A4A", "#CB181D", "#A50F15", "#67000D"]);
 
           var state = g.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)
@@ -153,7 +155,7 @@ var mapViewModule = (function(){
 
           accident_color = d3.scale.threshold()
               .domain([0, max_accident * 0.15, max_accident * .30, max_accident * .45, max_accident * .65, max_accident * .85]) // <-A
-              .range(["#ffffff", "#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
+              .range(["#ffffff", "#FEE0D2", "#FC9272", "#FB6A4A", "#CB181D", "#A50F15", "#67000D"]);
 
           var state = g.selectAll("path")
             .data(topojson.feature(us, us.objects.states).features)

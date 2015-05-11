@@ -13,11 +13,11 @@ var collapsibleTreeModule = (function(){
     else
       date_range = data[0].date
 
-    var flare_obj = {name: "List of events that occurred on: " + date_range, children:[], class: "parent"};   
+    var flare_obj = {name: "+ List of events that occurred on: " + date_range, children:[], class: "parent"};   
 
       var overall_primary = d3.nest().key(function(d){return d.primary_cause;}).rollup(function(d){return d}).entries(data).filter(function(d, index)
-        { if(d.key == "null"){d.key = "Unknown Cause"} flare_obj.children.push({name: d.key + ": " + d.values.length, children:[], class:"parent"});  for(var i = 0; i < d.values.length; i++)
-        { d.values[i].name = "Event: " + i;  flare_obj.children[index].children.push({name: d.values[i].name, children:[], class: "parent"});
+        { if(d.key == "null"){d.key = "Unknown Cause"} flare_obj.children.push({name: "+ " + d.key + ": " + d.values.length, children:[], class:"parent"});  for(var i = 0; i < d.values.length; i++)
+        { d.values[i].name = "+ Event: " + i;  flare_obj.children[index].children.push({name: d.values[i].name, children:[], class: "parent"});
 
         for(var property in d.values[i])
          {
@@ -286,7 +286,12 @@ var collapsibleTreeModule = (function(){
       }
 
       function color(d) {
-        return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#FEE0D2";
+        // return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#E3EDF7";
+                return d._children ? "#b7b7b7" : d.children ? "whitesmoke" : "whitesmoke";
+
+        // return d._children ? "#FEE0D2" : d.children ? "#FEE0D2" : "#FEE0D2";
+
+
       }
 
       // console.log(remarks_hash);
