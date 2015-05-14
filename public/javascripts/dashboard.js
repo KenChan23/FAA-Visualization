@@ -223,10 +223,10 @@ data_range = data_range.split(',');
       return d.length;
     }).map(csv_data);
 
-    x.domain(d3.extent(fatality_data_array.map(function(d) {
+    x.domain(d3.extent(accident_data_array.map(function(d) {
       return d.date;
     })));
-    y.domain([0, d3.max(fatality_data_array.map(function(d) {
+    y.domain([0, d3.max(accident_data_array.map(function(d) {
       return d.count;
     }))]);
     x2.domain(x.domain());
@@ -234,23 +234,23 @@ data_range = data_range.split(',');
 
     //  Initialize the view.
     rect.filter(function(d) {
-        return d in fatality_data;
+        return d in accident_data;
       })
       .attr("class", function(d) {
-        return (fatality_data[d] === 0) ? "month-" + d.substring(5, 7) + " day q-color0-10" : "month-" + d.substring(5, 7) + " day " + fatality_color(fatality_data[d]);
+        return (accident_data[d] === 0) ? "month-" + d.substring(5, 7) + " day q-color0-10" : "month-" + d.substring(5, 7) + " day " + accident_color(accident_data[d]);
       })
       .select("title")
       .text(function(d) {
-        if (fatality_data[d] == 0)
+        if (accident_data[d] == 0)
           return d + ": No fatalities!";
-        else if (fatality_data[d] == 1)
-          return d + ": " + fatality_data[d] + " fatality"
+        else if (accident_data[d] == 1)
+          return d + ": " + accident_data[d] + " accident"
         else
-          return d + ": " + fatality_data[d] + " fatalities";
+          return d + ": " + accident_data[d] + " accidents";
       });
 
     context.append("path")
-      .datum(fatality_data_array)
+      .datum(accident_data_array)
       .attr("class", "area")
       .attr("transform", "translate(0," + 0 + ")")
       .attr("d", area2);

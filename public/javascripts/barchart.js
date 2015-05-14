@@ -54,7 +54,7 @@ var barChartModule = (function(){
 
       // var hoveredBar = d3.select(this);
       d3.selectAll('.g rect').filter(function(e){return e !== d}).style('opacity', 0.3);
-            console.log(d3.select(this));
+            // console.log(d3.select(this));
       // d3.select('#hello').html(s);
     }
 
@@ -114,9 +114,6 @@ var barChartModule = (function(){
         // .on('mouseover', function(d) { this.attr('fill', 'red');});
 
           bin.exit().remove();
-          
-
-
         }
 
         function updateLegend(selectedCategories) {
@@ -146,9 +143,6 @@ var barChartModule = (function(){
           .text(function(d) { return d; });
 
           legend.exit().remove();
-
-
-
 
         }
 
@@ -221,6 +215,8 @@ var barChartModule = (function(){
           });
       }
 
+      //  Retrieves data in the following format:
+      //    6 objects: each object in the following format {key: 'bin_value', values: [array of objects in key/value pair]}
        category_data = d3.nest().key(function(d){
           return 0 <= d[totalHoursParameter] && d[totalHoursParameter] < 200 ?
             "0 - 199" : (200 <= d[totalHoursParameter] && d[totalHoursParameter] < 400 ?
@@ -235,6 +231,10 @@ var barChartModule = (function(){
           return leaves.length;
         }).entries(data);
 
+      console.log(category_data);
+
+      //  Converts the above in the following format:
+      //    6 objects: each object in the following format {0: {'cause': count}, ...}
         formattedCategoryData = category_data.map(function(d){
           var obj = {};
 
@@ -247,57 +247,129 @@ var barChartModule = (function(){
           return obj;
         });
 
-        // console.log("Category Data");
-        // console.log(category_data);
+        console.log(formattedCategoryData);
 
-      function commonKeys(obj1, obj2, obj3, obj4, obj5, obj6) {
+        //  Technically speaking, this function does not need to aggregate the common keys since we're dealing with reported accident types.
+        //  Instead, take the maximum of each bin and make that one of the six categories.
+      // function commonKeys(obj1, obj2, obj3, obj4, obj5, obj6) {
+      //   var keys = [];
+      //   for(var i in obj1) {
+      //     if(i in obj2 && i in obj3 && i in obj4 && i in obj5 && i in obj6 && i !== "null" && i !== "bin") {
+      //       keys.push(i);
+      //       aggregate_data[i] = 0;
+      //     }
+      //   }              
+      //   return keys;
+      // }
+
+      function extractUniqueKeys(obj1, obj2, obj3, obj4, obj5, obj6){
         var keys = [];
         for(var i in obj1) {
-          if(i in obj2 && i in obj3 && i in obj4 && i in obj5 && i in obj6 && i !== "null" && i !== "bin") {
+          if(i !== "null" && i !== "bin") {
             keys.push(i);
             aggregate_data[i] = 0;
           }
-        }              
-        return keys;
+        }
+        for(var i in obj2) {
+          if(i !== "null" && i !== "bin" && !(i in obj1)) {
+            keys.push(i);
+            aggregate_data[i] = 0;
+          }
+        }
+        for(var i in obj3) {
+          if(i !== "null" && i !== "bin" && !(i in obj1) && !(i in obj2)) {
+            keys.push(i);
+            aggregate_data[i] = 0;
+          }
+        }
+        for(var i in obj4) {
+          if(i !== "null" && i !== "bin" && !(i in obj1) && !(i in obj2) && !(i in obj3)) {
+            keys.push(i);
+            aggregate_data[i] = 0;
+          }
+        }
+        for(var i in obj5) {
+          if(i !== "null" && i !== "bin" && !(i in obj1) && !(i in obj2) && !(i in obj3) && !(i in obj4)) {
+            keys.push(i);
+            aggregate_data[i] = 0;
+          }
+        }
+        for(var i in obj6) {
+          if(i !== "null" && i !== "bin" && !(i in obj1) && !(i in obj2) && !(i in obj3) && !(i in obj4) && !(i in obj5)) {
+            keys.push(i);
+            aggregate_data[i] = 0;
+          }
+        }
+        return keys.sort();
       }
 
-      var commonKeyValues = commonKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
+      function maxKeyValue(obj, keyOne, keyTwo, keyThree, keyFour, keyFive){
+        console.log(obj);
 
-      // console.log("Common Key Values");
-      // console.log(formattedCategoryData);
+        if(keyOne == undefined && keyTwo == undefined && keyThree == undefined && keyFour == undefined && keyFive == undefined)
+          return Object.keys(obj).filter(function(d){return d !== "null" && d !== "bin"; }).reduce(function(a, b){return  (obj[a] > obj[b]) ? a : b });
+        else
+          return Object.keys(obj).filter(function(d){return d !== "null" && d !== "bin" && d !== keyOne && d !== keyTwo && d !== keyThree && d !== keyFour && d !== keyFive; }).reduce(function(a, b){return  (obj[a] > obj[b]) ? a : b });
+      }
+
+      var bin0Category = maxKeyValue(formattedCategoryData[0]);
+      var bin1Category = maxKeyValue(formattedCategoryData[1], bin0Category);
+      var bin2Category = maxKeyValue(formattedCategoryData[2], bin0Category, bin1Category);
+      var bin3Category = maxKeyValue(formattedCategoryData[3], bin0Category, bin1Category, bin2Category);
+      var bin4Category = maxKeyValue(formattedCategoryData[4], bin0Category, bin1Category, bin2Category, bin3Category);
+      var bin5Category = maxKeyValue(formattedCategoryData[5], bin0Category, bin1Category, bin2Category, bin3Category, bin4Category);
+
+      //  undefined statements....
+
+      console.log(bin0Category);
+      console.log(bin1Category);
+      console.log(bin2Category);
+      console.log(bin3Category);
+      console.log(bin4Category);
+      console.log(bin5Category);
+
+
+      var uniqueKeyValues = extractUniqueKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
+
+      console.log(uniqueKeyValues);
+
+
+
+
+
+      // var commonKeyValues = commonKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
+
+      // console.log(commonKeyValues);
 
       barChartData = formattedCategoryData.map(function(d){
         var obj = {};
 
         obj["bin"] = d["bin"];
-        for(var i = 0; i < commonKeyValues.length; i++)
+        for(var i = 0; i < uniqueKeyValues.length; i++)
         {
-          obj[commonKeyValues[i]] = d[commonKeyValues[i]];
-          aggregate_data[commonKeyValues[i]] += d[commonKeyValues[i]];
+          if(d[uniqueKeyValues[i]] == undefined)
+          {
+            obj[uniqueKeyValues[i]] = 0;
+            aggregate_data[uniqueKeyValues[i]] += 0;
+          }
+          else
+          {
+            obj[uniqueKeyValues[i]] = d[uniqueKeyValues[i]];
+            aggregate_data[uniqueKeyValues[i]] += d[uniqueKeyValues[i]];
+          }
         }
 
         return obj;
       });
 
-      // console.log("Bar Chart Data");
-      console.log(barChartData);
+      console.log(aggregate_data);
 
-      // console.log(category_data);
-      // console.log(formattedCategoryData);
-      // console.log(commonKeyValues);
-      // console.log(barChartData);
-      // console.log(aggregate_data);
-
-      selectedCategories = commonKeyValues.filter(function(key, i) { return i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5; });
+      selectedCategories = uniqueKeyValues.filter(function(key, i) { return key === bin0Category || key === bin1Category || key === bin2Category || key === bin3Category || key === bin4Category || key === bin5Category; });
 
       var selected_obj  = {};
       for(var i = 0, l = selectedCategories.length; i < l; i++) {
           selected_obj[selectedCategories[i]] = true;
       }
-
-      // console.log("Selected!!!");
-      // console.log(selectedCategories);
-      // console.log("........");
 
       barChartData.forEach(function(d){
         d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
@@ -373,30 +445,10 @@ var barChartModule = (function(){
           .style("text-anchor", "end")
           .text(function(d) { return d; });
 
-      //  Need hover feature...
-      // inputs = d3.select('#dropdown3')
-      //             .selectAll('input')
-      //             .data(commonKeyValues, function(d) { return d; })
-      //             .enter()
-      //             .append('li')
-      //               // .attr('display', 'block')
-      //               // .text(function(d){return d;})
-      //             .append('a')
-      //             .text(function(d){return d + ' ' + '(' + aggregate_data[d] + ')';})
-      //             .append('input')
-      //               .attr('type', 'checkbox')
-      //               .attr('name', 'accident_type')
-      //               .attr('value', function(d){return d;})
-      //               // .attr('right', '25px')
-      //               .style('left', '515px')
-      //               .property('checked', function(d, i){return (i === 0 || i === 1 || i === 2 || i === 3 || i === 4 || i === 5) ? true : false;})
-      //               .on('click', checkboxChecked);
-
-
     var inputs = d3.select('#dropdown3')
                   // .selectAll('input')
                   .selectAll('li')
-                  .data(commonKeyValues, function(d) { return d; });
+                  .data(uniqueKeyValues, function(d) { return d; });
                   
         var inputs_sub = inputs.enter()
                   .append('li');
