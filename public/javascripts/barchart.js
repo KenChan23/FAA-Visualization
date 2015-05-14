@@ -24,7 +24,7 @@ var barChartModule = (function(){
         .range([height, 0]);
 
     var color = d3.scale.ordinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c"]);
+        .range(["#B2182B", "#EF8A62", "#FDDBC7", "#E0E0E0", "#999999", "#4D4D4D"]);
         // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c"]);
 
     var xAxis = d3.svg.axis()
@@ -229,24 +229,13 @@ var barChartModule = (function(){
                                                                           (binHash["800 - 999"] += 1, "800 - 999") : (d[totalHoursParameter] >= 1000 ?
                                                                                 (binHash["1000+"] += 1, "1000+") : (binHash["Unknown"] += 1, "Unknown") )))));
         })
-      .key(function(d) { return d.primary_cause; })
+      .key(function(d) {return d.primary_cause;})
       .sortKeys(d3.ascending)
       .rollup(function(leaves){ 
           return leaves.length;
         }).entries(data);
 
-      console.log(category_data);
-
-
-
-
-
-
-
-
-
-
-
+      console.log(binHash);
 
       if(binHash["0 - 199"] == 0)
       {
@@ -277,6 +266,20 @@ var barChartModule = (function(){
         category_data.push({key: "Unknown", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
       }
 
+      console.log(category_data);
+
+      category_data = category_data.filter(function(d){
+        if(d.values.length == 1 && d.values[0]["key"] == "null")
+        {
+          console.log("Inside");
+          d.values.push({key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0});
+          return d;
+        }
+        else
+          return d;
+
+      });
+
       //  Converts the above in the following format:
       //    6 objects: each object in the following format {0: {'cause': count}, ...}
         formattedCategoryData = category_data.filter(function(d){return d.key != "Unknown"}).map(function(d){
@@ -291,7 +294,8 @@ var barChartModule = (function(){
           return obj;
         });
 
-        console.log(formattedCategoryData);
+            console.log(formattedCategoryData);
+
 
         //  Technically speaking, this function does not need to aggregate the common keys since we're dealing with reported accident types.
         //  Instead, take the maximum of each bin and make that one of the six categories.
@@ -365,21 +369,7 @@ var barChartModule = (function(){
 
       //  undefined statements....
 
-      console.log(bin0Category);
-      console.log(bin1Category);
-      console.log(bin2Category);
-      console.log(bin3Category);
-      console.log(bin4Category);
-      console.log(bin5Category);
-
-
       var uniqueKeyValues = extractUniqueKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
-
-      console.log(uniqueKeyValues);
-
-
-
-
 
       // var commonKeyValues = commonKeys(formattedCategoryData[0], formattedCategoryData[1], formattedCategoryData[2], formattedCategoryData[3], formattedCategoryData[4], formattedCategoryData[5]);
 
@@ -524,18 +514,29 @@ var barChartModule = (function(){
     generateBarChart("total_hours_flown", "Total Hours Flown");
 
     d3.selectAll('#total-hours-flown, #total-hours-flown-ninety, #total-hours-flown-make, #total-hours-flown-ninety-make').on('click', function() {
+      var filter_array = []; 
           d3.select('#side-view').select('.legend-group').remove();
           d3.select('#side-view').select('svg').remove();
         if($('#total-hours-flown').is(':checked')) 
         {
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
           generateBarChart("total_hours_flown", "Total Hours Flown");
         }
         if($('#total-hours-flown-ninety').is(':checked')) 
+        {
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
           generateBarChart("hours_flown_90_days", "Total Hours Flown (Past 90 Days)");
+        }
         if($('#total-hours-flown-make').is(':checked'))
+        {
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
           generateBarChart("total_hours_model_flown", "Total Hours Flown - Make/Model");
+        }
         if($('#total-hours-flown-ninety-make').is(':checked'))
+        {
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
           generateBarChart("hours_model_flown_90_days", "Total Hours Flown (Past 90 Days) - Make/Model");
+        }
       }); 
 
     $(document).mouseup(function (e)
