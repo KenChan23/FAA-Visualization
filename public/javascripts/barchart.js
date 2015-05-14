@@ -215,15 +215,19 @@ var barChartModule = (function(){
           });
       }
 
+      //  To verify the bin exists or not.
+      var binHash = {"0 - 199":0, "200 - 399":0, "400 - 599":0, "600 - 799":0, "800 - 999":0, "1000+":0, "Unknown": 0};
+
       //  Retrieves data in the following format:
       //    6 objects: each object in the following format {key: 'bin_value', values: [array of objects in key/value pair]}
        category_data = d3.nest().key(function(d){
           return 0 <= d[totalHoursParameter] && d[totalHoursParameter] < 200 ?
-            "0 - 199" : (200 <= d[totalHoursParameter] && d[totalHoursParameter] < 400 ?
-                          "200 - 399" : (400 <= d[totalHoursParameter] && d[totalHoursParameter] < 600 ?
-                                          "400 - 599" : (600 <= d[totalHoursParameter] && d[totalHoursParameter] < 800 ?
-                                                          "600 - 799" : (800 <= d[totalHoursParameter] && d[totalHoursParameter] < 1000 ?
-                                                                          "800 - 999" : "1000+"))));
+            (binHash["0 - 199"] += 1, "0 - 199") : (200 <= d[totalHoursParameter] && d[totalHoursParameter] < 400 ?
+                          (binHash["200 - 399"] += 1, "200 - 399") : (400 <= d[totalHoursParameter] && d[totalHoursParameter] < 600 ?
+                                          (binHash["400 - 599"] += 1, "400 - 599") : (600 <= d[totalHoursParameter] && d[totalHoursParameter] < 800 ?
+                                                          (binHash["600 - 799"] += 1, "600 - 799") : (800 <= d[totalHoursParameter] && d[totalHoursParameter] < 1000 ?
+                                                                          (binHash["800 - 999"] += 1, "800 - 999") : (d[totalHoursParameter] >= 1000 ?
+                                                                                (binHash["1000+"] += 1, "1000+") : (binHash["Unknown"] += 1, "Unknown") )))));
         })
       .key(function(d) { return d.primary_cause; })
       .sortKeys(d3.ascending)
@@ -233,9 +237,49 @@ var barChartModule = (function(){
 
       console.log(category_data);
 
+
+
+
+
+
+
+
+
+
+
+
+      if(binHash["0 - 199"] == 0)
+      {
+        category_data.push({key: "0 - 199", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+      if(binHash["200 - 399"] == 0)
+      {
+        category_data.push({key: "200 - 399", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+      if(binHash["400 - 599"] == 0)
+      {
+        category_data.push({key: "400 - 599", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+      if(binHash["600 - 799"] == 0)
+      {
+        category_data.push({key: "600 - 799", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+      if(binHash["800 - 999"] == 0)
+      {
+        category_data.push({key: "800 - 999", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+      if(binHash["1000+"] == 0)
+      {
+        category_data.push({key: "1000+", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+      if(binHash["Unknown"] == 0)
+      {
+        category_data.push({key: "Unknown", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
+      }
+
       //  Converts the above in the following format:
       //    6 objects: each object in the following format {0: {'cause': count}, ...}
-        formattedCategoryData = category_data.map(function(d){
+        formattedCategoryData = category_data.filter(function(d){return d.key != "Unknown"}).map(function(d){
           var obj = {};
 
           obj["bin"] = d.key;
@@ -362,9 +406,9 @@ var barChartModule = (function(){
         return obj;
       });
 
-      console.log(aggregate_data);
+      console.log(barChartData);
 
-      selectedCategories = uniqueKeyValues.filter(function(key, i) { return key === bin0Category || key === bin1Category || key === bin2Category || key === bin3Category || key === bin4Category || key === bin5Category; });
+      selectedCategories = uniqueKeyValues.filter(function(key, i) { return key === bin0Category || key === bin1Category || key === bin2Category || key === bin3Category || key === bin4Category || key === bin5Category;});
 
       var selected_obj  = {};
       for(var i = 0, l = selectedCategories.length; i < l; i++) {

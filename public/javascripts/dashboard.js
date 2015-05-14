@@ -29,6 +29,8 @@ data_range = data_range.split(',');
   var accident_data_array = [];
   var csv_data;
 
+
+
   var width = 750,
     height = 100,
     // cellSize = 17; // cell size
