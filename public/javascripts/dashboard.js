@@ -431,8 +431,8 @@ data_range = data_range.split(',');
     //   if($('#fatalities').is(':checked'))
     //     mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate)
     // }
-
-
+    date = Date.parse(d);
+    console.log(minimumDate);
     s = JSON.stringify(data_lookup[d]);
     // console.log(data_lookup[d]);
     // d3.select('.cd-panel-content').html(s);
@@ -441,6 +441,23 @@ data_range = data_range.split(',');
     // });
     d3.select('.cd-panel-content svg').remove();
     collapsibleTreeModule.create(data_lookup[d]);
+
+    if ($('#bargraph-view').is(':checked'))
+    {
+      // console.log("Bargraph");
+      d3.select("#side-view").select("svg").remove();
+      d3.selectAll("#dropdown3 li").remove();
+      barChartModule.create(date, date);
+    }
+    if ($('#mapview-view').is(':checked'))
+    {
+      // console.log("Mapview");
+      d3.select("#side-view").select("svg").remove();
+      if($('#fatalities').is(':checked'))
+        mapViewModule.create(csv_data, "fatalities", date, date);
+      if($('#accidents').is(':checked'))
+        mapViewModule.create(csv_data, "accidents", date, date);
+    }
   });
 
   // $("#slider").bind("valuesChanging", function(e, data){
