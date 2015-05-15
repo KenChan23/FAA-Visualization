@@ -7,7 +7,7 @@ data_range = data_range.split(',');
 (function(global) {
   // "use strict";
 
-  barChartModule.create();
+  barChartModule.create(minimumDate, maximumDate);
 
   // var ssc = global.ssc;   
   //   if (!ssc) {
@@ -29,7 +29,8 @@ data_range = data_range.split(',');
   var accident_data_array = [];
   var csv_data;
 
-
+  var minimumDate = undefined;
+  var maximumDate = undefined;
 
   var width = 750,
     height = 100,
@@ -371,7 +372,7 @@ data_range = data_range.split(',');
         if(d3.select("#side-view").select("svg").attr("class") == "fatalities-mapview")
         {
           d3.select("#side-view").select("svg").remove();
-          mapViewModule.create(csv_data, "accidents");
+          mapViewModule.create(csv_data, "accidents", minimumDate, maximumDate);
         }
       }
       if ($('#fatalities').is(':checked'))
@@ -403,7 +404,7 @@ data_range = data_range.split(',');
         if(d3.select("#side-view").select("svg").attr("class") == "accidents-mapview")
         {
           d3.select("#side-view").select("svg").remove();
-          mapViewModule.create(csv_data, "fatalities");
+          mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate);
         }
       }
     });
@@ -465,16 +466,16 @@ data_range = data_range.split(',');
       // console.log("Bargraph");
       d3.select("#side-view").select("svg").remove();
       d3.selectAll("#dropdown3 li").remove();
-      barChartModule.create();
+      barChartModule.create(minimumDate, maximumDate);
     }
     if ($('#mapview-view').is(':checked'))
     {
       // console.log("Mapview");
       d3.select("#side-view").select("svg").remove();
       if($('#fatalities').is(':checked'))
-        mapViewModule.create(csv_data, "fatalities");
+        mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate);
       if($('#accidents').is(':checked'))
-        mapViewModule.create(csv_data, "accidents");
+        mapViewModule.create(csv_data, "accidents", minimumDate, maximumDate);
     }
   });
 
@@ -688,6 +689,8 @@ function brushedstart() {
     } else {
       // d3.selectAll('.day').classed('q-invisible', false);
       // brushedend();
+      minimumDate = undefined;
+      maximumDate = undefined;
       return d3.selectAll('.day').style('opacity', 1);
     }
 
@@ -718,13 +721,13 @@ function brushedstart() {
     }
     else{
       if($('#bargraph-view').is(':checked'))
-        barChartModule.create();
+        barChartModule.create(minimumDate, maximumDate);
       else
       {
         if($('#accidents').is(':checked'))
-          mapViewModule.create(csv_data, "accidents");
+          mapViewModule.create(csv_data, "accidents", minimumDate, maximumDate);
         if($('#fatalities').is(':checked'))
-          mapViewModule.create(csv_data, "fatalities");
+          mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate);
       }
     }
   }
