@@ -432,6 +432,8 @@ data_range = data_range.split(',');
     //     mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate)
     // }
     date = Date.parse(d);
+    minimumDate = date;
+    maximumDate = date;
     
     d3.selectAll('.day').style('opacity', function(e){return (e == d) ? 1 : 0.1;});
 
@@ -449,16 +451,16 @@ data_range = data_range.split(',');
       // console.log("Bargraph");
       d3.select("#side-view").select("svg").remove();
       d3.selectAll("#dropdown3 li").remove();
-      barChartModule.create(date, date);
+      barChartModule.create(minimumDate, maximumDate);
     }
     if ($('#mapview-view').is(':checked'))
     {
       // console.log("Mapview");
       d3.select("#side-view").select("svg").remove();
       if($('#fatalities').is(':checked'))
-        mapViewModule.create(csv_data, "fatalities", date, date);
+        mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate);
       if($('#accidents').is(':checked'))
-        mapViewModule.create(csv_data, "accidents", date, date);
+        mapViewModule.create(csv_data, "accidents", minimumDate, maximumDate);
     }
   });
 

@@ -247,7 +247,7 @@ var barChartModule = (function(){
           return leaves.length;
         }).entries(data);
 
-      console.log(binHash);
+      // console.log(binHash);
 
       if(binHash["0 - 199"] == 0)
       {
@@ -278,12 +278,12 @@ var barChartModule = (function(){
         category_data.push({key: "Unknown", values: [{key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0}]});
       }
 
-      console.log(category_data);
+      // console.log(category_data);
 
       category_data = category_data.filter(function(d){
         if(d.values.length == 1 && d.values[0]["key"] == "null")
         {
-          console.log("Inside");
+          // console.log("Inside");
           d.values.push({key: "Advanced Throttle Rapidly", values: 0}, {key: "Aerobatics Below Safe Altitude", values: 0}, {key: "Aircraft Improperly Aligned With Runway", values: 0}, {key: "Aircraft Improperly Equipped for Flight", values: 0}, {key: "Attempt Operation With Different Equipment", values: 0}, {key: "Attempted Operations Beyond Experience Level", values: 0}, {key: "Blown Over By Strong Wind", values: 0});
           return d;
         }
@@ -306,7 +306,7 @@ var barChartModule = (function(){
           return obj;
         });
 
-            console.log(formattedCategoryData);
+            // console.log(formattedCategoryData);
 
 
         //  Technically speaking, this function does not need to aggregate the common keys since we're dealing with reported accident types.
@@ -364,7 +364,7 @@ var barChartModule = (function(){
       }
 
       function maxKeyValue(obj, keyOne, keyTwo, keyThree, keyFour, keyFive){
-        console.log(obj);
+        // console.log(obj);
 
         if(keyOne == undefined && keyTwo == undefined && keyThree == undefined && keyFour == undefined && keyFive == undefined)
           return Object.keys(obj).filter(function(d){return d !== "null" && d !== "bin"; }).reduce(function(a, b){return  (obj[a] > obj[b]) ? a : b });
@@ -408,7 +408,7 @@ var barChartModule = (function(){
         return obj;
       });
 
-      console.log(barChartData);
+      // console.log(barChartData);
 
       if(filterHash == undefined)
       {
