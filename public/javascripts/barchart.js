@@ -24,8 +24,11 @@ var barChartModule = (function(){
         .range([height, 0]);
 
     var color = d3.scale.ordinal()
-        .range(["#B2182B", "#EF8A62", "#FDDBC7", "#E0E0E0", "#999999", "#4D4D4D"]);
+            .range(["#B2182B", "#E08214", "#4D4D4D", "#EF8A62",  "#D8B365", "#999999"]);
+        // .range(["#B2182B", "#EF8A62", "#FDDBC7", "#E0E0E0", "#999999", "#4D4D4D"]);
         // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c"]);
+
+        
 
     var xAxis = d3.svg.axis()
         .scale(x0)
@@ -49,12 +52,10 @@ var barChartModule = (function(){
   barChart.create = function(minimum_date, maximum_date){
 
     function hoverBar(d) {
-      // console.log(d);
       // var s = "<p>" + d.category + "</p>";
 
       // var hoveredBar = d3.select(this);
-      d3.selectAll('.g rect').filter(function(e){return e !== d}).style('opacity', 0.3);
-            // console.log(d3.select(this));
+      d3.selectAll('.g rect').filter(function(e){return e !== d}).style('opacity', 0.2);
       // d3.select('#hello').html(s);
     }
 
@@ -71,8 +72,6 @@ var barChartModule = (function(){
             d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
           });
 
-        // console.log("BarChartData inside update chart: " + barChartData);
-
           x0.domain(binXAxis.concat("0 - 199").concat("200 - 399").concat("400 - 599").concat("600 - 799").concat("800 - 999").concat("1000+"));
           x1.domain(selectedCategories).rangeRoundBands([0, x0.rangeBand()]);
           y.domain([0, d3.max(barChartData, function(d) { return d3.max(d.categories, function(d) { return d.frequency; }); })]);
@@ -81,8 +80,6 @@ var barChartModule = (function(){
         .duration(800).call(xAxis)
         svg.selectAll('.y.axis').transition()
         .duration(800).call(yAxis)
-
-        // console.log(barChartData);
 
         //  Update...
     var bin = svg.selectAll(".g")
@@ -191,7 +188,7 @@ var barChartModule = (function(){
     }
 
 
-    function generateBarChart(totalHoursParameter, xAxisTitle) {
+    function generateBarChart(totalHoursParameter, xAxisTitle, filterHash) {
 
       svg = d3.select("#side-view").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -398,16 +395,33 @@ var barChartModule = (function(){
 
       console.log(barChartData);
 
-      selectedCategories = uniqueKeyValues.filter(function(key, i) { return key === bin0Category || key === bin1Category || key === bin2Category || key === bin3Category || key === bin4Category || key === bin5Category;});
+      if(filterHash == undefined)
+      {
+        selectedCategories = uniqueKeyValues.filter(function(key, i) { return key === bin0Category || key === bin1Category || key === bin2Category || key === bin3Category || key === bin4Category || key === bin5Category;});
 
-      var selected_obj  = {};
-      for(var i = 0, l = selectedCategories.length; i < l; i++) {
-          selected_obj[selectedCategories[i]] = true;
+        var selected_obj  = {};
+        for(var i = 0, l = selectedCategories.length; i < l; i++) {
+            selected_obj[selectedCategories[i]] = true;
+        }
+
+        barChartData.forEach(function(d){
+          d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
+        });
+      }
+      else
+      {
+        selectedCategories = uniqueKeyValues.filter(function(key, i) { return key in filterHash;});
+
+        var selected_obj  = {};
+        for(var i = 0, l = selectedCategories.length; i < l; i++) {
+            selected_obj[selectedCategories[i]] = true;
+        }
+
+        barChartData.forEach(function(d){
+          d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
+        });
       }
 
-      barChartData.forEach(function(d){
-        d.categories = selectedCategories.map(function(category) {return {category: category, frequency: +d[category]}; });
-      });
 
       // x0.domain(barChartData.map(function(d) {console.log('bin: ' + d.bin); return d.bin; }));
       x0.domain(binXAxis.concat("0 - 199").concat("200 - 399").concat("400 - 599").concat("600 - 799").concat("800 - 999").concat("1000+"));
@@ -514,28 +528,28 @@ var barChartModule = (function(){
     generateBarChart("total_hours_flown", "Total Hours Flown");
 
     d3.selectAll('#total-hours-flown, #total-hours-flown-ninety, #total-hours-flown-make, #total-hours-flown-ninety-make').on('click', function() {
-      var filter_array = []; 
+      var filter_hash = {}; 
           d3.select('#side-view').select('.legend-group').remove();
           d3.select('#side-view').select('svg').remove();
         if($('#total-hours-flown').is(':checked')) 
         {
-          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
-          generateBarChart("total_hours_flown", "Total Hours Flown");
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_hash[d3.select(this)[0][0].__data__] = true;}});
+          generateBarChart("total_hours_flown", "Total Hours Flown", filter_hash);
         }
         if($('#total-hours-flown-ninety').is(':checked')) 
         {
-          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
-          generateBarChart("hours_flown_90_days", "Total Hours Flown (Past 90 Days)");
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_hash[d3.select(this)[0][0].__data__] = true;}});
+          generateBarChart("hours_flown_90_days", "Total Hours Flown (Past 90 Days)", filter_hash);
         }
         if($('#total-hours-flown-make').is(':checked'))
         {
-          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
-          generateBarChart("total_hours_model_flown", "Total Hours Flown - Make/Model");
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_hash[d3.select(this)[0][0].__data__] = true;}});
+          generateBarChart("total_hours_model_flown", "Total Hours Flown - Make/Model", filter_hash);
         }
         if($('#total-hours-flown-ninety-make').is(':checked'))
         {
-          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_array.push(d3.select(this)[0][0].__data__);}});
-          generateBarChart("hours_model_flown_90_days", "Total Hours Flown (Past 90 Days) - Make/Model");
+          d3.selectAll('#dropdown3 li input').filter(function(d){if(d3.select(this).property('checked')){ filter_hash[d3.select(this)[0][0].__data__] = true;}});
+          generateBarChart("hours_model_flown_90_days", "Total Hours Flown (Past 90 Days) - Make/Model", filter_hash);
         }
       }); 
 
