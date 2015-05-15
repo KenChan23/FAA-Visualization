@@ -24,7 +24,21 @@ var barChartModule = (function(){
         .range([height, 0]);
 
     var color = d3.scale.ordinal()
-            .range(["#B2182B", "#E08214", "#4D4D4D", "#EF8A62",  "#D8B365", "#999999"]);
+    .range([ "#B2182B", "#E08214", "#676767", "#EF8A62",  "#D8B365", "#999999"]);
+
+
+
+    var color_hash = {
+                      "#B2182B": true, 
+                      "#E08214": true, 
+                      "#676767": true, 
+                      "#EF8A62": true,  
+                      "#D8B365": true, 
+                      "#999999": true
+                    }
+
+
+            // .range(["#B2182B", "#E08214", "#4D4D4D", "#EF8A62",  "#D8B365", "#999999"]);
         // .range(["#B2182B", "#EF8A62", "#FDDBC7", "#E0E0E0", "#999999", "#4D4D4D"]);
         // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c"]);
 
@@ -137,7 +151,8 @@ var barChartModule = (function(){
           .attr("dy", ".35em")
           .attr("font-size", "10px")
           .style("text-anchor", "end")
-          .text(function(d) { return d; });
+          .text(function(d) { return d; })
+          .attr("fill", "#9e9e9e");
 
           legend.exit().remove();
 
@@ -438,7 +453,8 @@ var barChartModule = (function(){
           .attr("x", width / 2 + 50)
           .style("text-anchor", "end")
           .style("z-index", 999)
-          .text(xAxisTitle);;
+          .text(xAxisTitle)
+          .attr("fill", "#9e9e9e");
 
       svg.append("g")
           .attr("class", "y axis")
@@ -450,7 +466,8 @@ var barChartModule = (function(){
           .attr("dy", ".01em")
           .style("text-anchor", "end")
           .style("z-index", 999)
-          .text("Frequency");
+          .text("Frequency")
+          .attr("fill", "#9e9e9e");
 
       var bin = svg.selectAll(".bins")
           .data(barChartData)
@@ -466,7 +483,7 @@ var barChartModule = (function(){
           .attr("y", function(d) { return y(d.frequency); })
           // .transition().duration(800)
           .attr("height", function(d) { return height - y(d.frequency); })
-          .style("fill", function(d) { return color(d.category); })
+          .style("fill", function(d) {if(color(d.category) in color_hash){ color_hash[color(d.category)] = true; } return color(d.category); })
           // .on('mouseover', hoverBar)
           // .on('mouseout', hoverOff);
           .on('mouseover', function(d){tip.show(d); hoverBar(d);})
@@ -491,7 +508,8 @@ var barChartModule = (function(){
           .attr("dy", ".35em")
           .attr("font-size", "10px")
           .style("text-anchor", "end")
-          .text(function(d) { return d; });
+          .text(function(d) { return d; })
+          .attr("fill", "#9e9e9e");
 
     var inputs = d3.select('#dropdown3')
                   // .selectAll('input')
