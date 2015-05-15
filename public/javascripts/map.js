@@ -340,12 +340,12 @@ var mapViewModule = (function(){
       // var s = "<p>" + d.category + "</p>";
 
           // var hoveredBar = d3.select(this);
-          d3.selectAll('.g rect').filter(function(e){return e !== d}).style('opacity', 0.2);
+          d3.selectAll('g .bar').filter(function(e){return e !== d}).style('opacity', 0.2);
           // d3.select('#hello').html(s);
         }
 
         function hoverOff() {
-            d3.selectAll('.g rect').style('opacity', 1);
+            d3.selectAll('g .bar').style('opacity', 1);
         }
 
       console.log(stateData);
