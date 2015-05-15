@@ -432,7 +432,9 @@ data_range = data_range.split(',');
     //     mapViewModule.create(csv_data, "fatalities", minimumDate, maximumDate)
     // }
     date = Date.parse(d);
-    console.log(minimumDate);
+    
+    d3.selectAll('.day').style('opacity', function(e){return (e == d) ? 1 : 0.1;});
+
     s = JSON.stringify(data_lookup[d]);
     // console.log(data_lookup[d]);
     // d3.select('.cd-panel-content').html(s);
