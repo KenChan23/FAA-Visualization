@@ -46,7 +46,7 @@ module.exports = function(grunt){
           'public/javascripts/minified/map.min.js' : ['public/javascripts/map.js'],
           'public/javascripts/minified/sidebutton.min.js' : ['public/javascripts/sidebutton.js'],
           'public/javascripts/minified/barchart.min.js' : ['public/javascripts/barchart.js'],
-          'public/javascripts/minified/sidepanel.min.js' : ['public/javascripts/sidepanel.js']
+          'public/javascripts/minified/collapsible.min.js' : ['public/javascripts/collapsible.js']
         }
       }
     }
